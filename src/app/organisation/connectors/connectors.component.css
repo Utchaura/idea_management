@@ -1,0 +1,44 @@
+.wrapper {
+  width: 100%;
+  padding: 40px 100px;
+  box-sizing: border-box;
+  background-size: cover;
+  min-height: 100vh;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+::ng-deep .form-check-input:checked {
+  background-color: #e2b104;
+  border-color: #e2b104;
+}
+
+.btn {
+  width: auto;
+  font-size: 14px;
+  border: 0px;
+  background: #e2b104;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 2px;
+  outline: none;
+  align-items: center;
+  padding: 5px 16px;
+  outline: 0;
+  box-shadow: 0 0 0;
+}
+
+.form-control {
+  display: -webkit-inline-box;
+  height: 25px;
+  padding: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+  outline: 0;
+  box-shadow: 0 0 0;
+}

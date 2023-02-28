@@ -1,0 +1,104 @@
+<div
+  *ngIf="loading"
+  style="display: flex; margin: 100px auto auto auto"
+  class="spinner-border"
+  role="status"
+>
+  <span class="sr-only">Loading...</span>
+</div>
+
+  <div class="input-group rounded">
+    <input
+      class="form-control rounded"
+      placeholder="&#xF002; Search"
+      [(ngModel)]="filterKey"
+      (ngModelChange)="Search()"
+      style="position: fixed;
+      font-family:Arial, FontAwesome;
+      top: 0.6rem;
+      height: 30px;
+      z-index: 9999999;
+      color: black;
+      background: #ffffff;
+      width: 33.7rem;;"
+    />
+  </div>
+
+<!-- <cdk-virtual-scroll-viewport itemSize="300"  class="content"> -->
+<div *ngIf="filter">
+  <div class="idea" *ngFor="let i of ideaList; index as index">
+    <!-- <div class="idea" *ngFor="let i of ideas | filterIdea:filterKey; index as index"> -->
+      <app-single-idea
+        [Index]="index"
+        [Idea]="i"
+        [UserEmail]="emailId"
+        [UserProfile]="profilePic"
+        [UserId]="userId"
+        [IdeaId]="Ideaid"
+        [IdeaDomain]="Ideadomain"
+        [CommentId]="CommentId"
+        [CreateCommentComment]="CreateCommentComment"
+        [editComment]="editComment"
+        [idReplyComment]="idReplyComment"
+        [idComment]="idComment"
+        [currentUser]="currentUser"
+        (onIdea)="onClick($event)"
+        (addIdeaLike)="addLike($event)"
+        (ideaDelete)="DeleteIdea($event)"
+        (addIdeaDislike)="addUnlike($event)"
+        (addIdeaComment)="Post($event)"
+        (addCommentLike)="CommentLike($event)"
+        (CommentLikeUserList)="CommentLikeUsers($event)"
+        (CommentUnlikeUserList)="CommentUnlikeUsers($event)"
+        (addCommentDislike)="CommentUnlike($event)"
+        (addCommentComment)="CommentComment($event)"
+        (ideaStatusChange)="changeIdeaStatus($event)"
+        (sendIdeaBackLog)="sendIdeatoBackLog($event)"
+        (deleteIdeaComment)="onDelete($event)"
+        (editIdeaComment)="onEdit($event)"
+        (deleteCommentReply)="ReplyDelete($event)"
+        (editCommentReply)="onEditCommentReply($event)"
+        (addIdeaFollower)="addFollower($event)"
+        (removeIdeaFollower)="removeFollower($event)"
+      ></app-single-idea>
+    </div>
+</div>
+<div *ngIf="!filter">
+  <div class="idea" *ngFor="let i of ideas; index as index">
+    <!-- <div class="idea" *ngFor="let i of ideas | filterIdea:filterKey; index as index"> -->
+      <app-single-idea
+        [Index]="index"
+        [Idea]="i"
+        [UserEmail]="emailId"
+        [UserProfile]="profilePic"
+        [UserId]="userId"
+        [IdeaId]="Ideaid"
+        [IdeaDomain]="Ideadomain"
+        [CommentId]="CommentId"
+        [CreateCommentComment]="CreateCommentComment"
+        [editComment]="editComment"
+        [idReplyComment]="idReplyComment"
+        [idComment]="idComment"
+        [currentUser]="currentUser"
+        (onIdea)="onClick($event)"
+        (addIdeaLike)="addLike($event)"
+        (ideaDelete)="DeleteIdea($event)"
+        (addIdeaDislike)="addUnlike($event)"
+        (addIdeaComment)="Post($event)"
+        (addCommentLike)="CommentLike($event)"
+        (CommentLikeUserList)="CommentLikeUsers($event)"
+        (CommentUnlikeUserList)="CommentUnlikeUsers($event)"
+        (addCommentDislike)="CommentUnlike($event)"
+        (addCommentComment)="CommentComment($event)"
+        (ideaStatusChange)="changeIdeaStatus($event)"
+        (sendIdeaBackLog)="sendIdeatoBackLog($event)"
+        (deleteIdeaComment)="onDelete($event)"
+        (editIdeaComment)="onEdit($event)"
+        (deleteCommentReply)="ReplyDelete($event)"
+        (editCommentReply)="onEditCommentReply($event)"
+        (addIdeaFollower)="addFollower($event)"
+        (removeIdeaFollower)="removeFollower($event)"
+      ></app-single-idea>
+    </div>
+</div>
+<!-- </cdk-virtual-scroll-viewport> -->

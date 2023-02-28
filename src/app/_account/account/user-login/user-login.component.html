@@ -1,0 +1,114 @@
+<ng-container *ngIf="loginForm">
+  <div class="form-title">Join Us</div>
+  <form
+    [formGroup]="loginForm"
+    name="loginForm"
+    (ngSubmit)="loginForm.valid && onSubmit()"
+  >
+    <div class="form-group">
+      <!-- <label for="email" id="email" >E-mail<span style="color:rgb(238, 28, 28);font-weight:800;"
+      class="form-required">*</span></label> -->
+      <input
+        type="text"
+        class="form-control input-lg"
+        value
+        size="20"
+        id="email"
+        name="email"
+        formControlName="email"
+        [ngClass]="{
+          'is-invalid':
+            loginForm.get('email').touched && loginForm.get('email').invalid
+        }"
+        placeholder="E-mail"
+      />
+      <div
+        *ngIf="loginForm.get('email').touched && loginForm.get('email').invalid"
+        class="invalid-feedback"
+      >
+        <div
+          style="color: rgb(238, 28, 28); font-size: 15px"
+          *ngIf="loginForm.get('email').errors?.required"
+        >
+          Please enter your Email
+        </div>
+        <div
+          style="color: rgb(238, 28, 28); font-size: 15px"
+          *ngIf="loginForm.get('email').errors?.email"
+        >
+          Email must be a valid email Address
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <!-- <label for="password" id="password" >Password<span style="color:rgb(238, 28, 28);
+  font-weight:800;" class="form-required">*</span></label> -->
+      <input
+        type="password"
+        class="form-control input-lg"
+        value
+        size="20"
+        id="password"
+        name="password"
+        formControlName="password"
+        [ngClass]="{
+          'is-invalid':
+            loginForm.get('password').touched &&
+            loginForm.get('password').invalid
+        }"
+        required="true"
+        placeholder="Password"
+      />
+
+      <div
+        *ngIf="
+          loginForm.get('password').touched && loginForm.get('password').invalid
+        "
+        class="invalid-feedback"
+      >
+        <div
+          style="color: rgb(238, 28, 28); font-size: 15px"
+          *ngIf="loginForm.get('password').errors?.required"
+        >
+          This field can not be empty
+        </div>
+      </div>
+    </div>
+
+    <label class="checkbox-inline">
+      <input type="checkbox" class="largerCheckbox" value="" required />
+      <span>Remember Me</span>
+    </label>
+    <!-- <div class="forgot-password">
+      <p
+        routerLink="/account/forgot-password"
+        routerLinkActive="router-link-active"
+      >
+        Forgot password
+      </p>
+    </div> -->
+    <br />
+    <div class="button-border">
+      <button type="submit" [disabled]="!loginForm.valid" id="login">
+        <span
+          *ngIf="showLoader"
+          class="spinner-grow spinner-grow-sm"
+          aria-hidden="true"
+        ></span>
+        <span *ngIf="!showLoader">Login</span>
+        <span *ngIf="showLoader">Loading...</span>
+      </button>
+    </div>
+    <div class="register-button">
+      Don't have an account?
+      <span
+        routerLink="/account/user-registration"
+        routerLinkActive="router-link-active"
+        >Sign Up</span
+      >
+    </div>
+  </form>
+</ng-container>
+
+<router-outlet></router-outlet>

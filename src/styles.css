@@ -1,0 +1,70 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  overflow-x: hidden;
+  /* Hide horizontal scrollbar */
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.cdk-overlay-container {
+  z-index: 1051 !important;
+}
+
+.modal-dialog.modal-lg {
+  margin-top: 50px;
+}
+
+
+.modal-dialog.modal-lg .modal-body{
+  height: calc(100vh - 170px);
+    overflow: auto;
+}
+
+.modal-dialog.modal-md {
+  margin: 50px 0 0 470px;
+}
+::-webkit-scrollbar {
+  width: 5px !important;
+  height: 10px !important;
+}
+::-webkit-scrollbar-thumb {
+  background: #bababa !important;
+  border-radius: 0;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+body{
+  background-color: #fff;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.PopupClose {
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
+  z-index: 9;
+  top: 12px;
+}
+.PopupClose img {
+  width: 14px;
+  height: 14px;
+}
+.modal-dialog.modal-md {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  margin: 0;
+  width: 400px;
+}
+.modal-body{
+  padding: 16px !important;
+}

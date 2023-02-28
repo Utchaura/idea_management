@@ -1,0 +1,264 @@
+<div class="wrapper-pd">
+  <div class="left border-right">
+    <div class="menu-parent">
+      <div class="topNavigation">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a
+            class="list-group-item list-group-item-action active"
+            data-toggle="list"
+            (click)="editDetail()"
+            role="tab"
+            aria-controls="home"
+            >General</a
+          >
+          <a
+            class="list-group-item list-group-item-action"
+            data-toggle="list"
+            (click)="editAuthSetting()"
+            role="tab"
+            aria-controls="profile"
+            >Authentication Settings</a
+          >
+          <a
+            class="list-group-item list-group-item-action"
+            data-toggle="list"
+            (click)="editManagement()"
+            role="tab"
+            aria-controls="profile"
+          >
+            Management Settings</a
+          >
+        </div>
+        <!-- <li class="list-items" (click)="editDetail()">
+          <a class="text active"> General </a>
+        </li>
+        <li class="list-items" (click)="editAuthSetting()">
+          <a class="text"> Authentication Settings </a>
+        </li>
+        <li class="list-items" (click)="editManagement()">
+          <a class="text"> Management Settings </a>
+        </li> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div *ngIf="organisationDetail">
+      <div class="row ml-0">
+        <div class="col-8">
+          <div class="wrapper">
+            <form [formGroup]="editOrganisationForm">
+              <div class="title">Organisation Details</div>
+
+              <div class="form-group">
+                <label>Organisation Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="organisationName"
+                />
+              </div>
+              <div class="form-group">
+                <label>Website</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="website"
+                />
+              </div>
+              <div class="form-group">
+                <label>Country</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="country"
+                />
+              </div>
+              <div class="form-group">
+                <label>Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="address"
+                />
+              </div>
+              <div class="form-group">
+                <label>Domain</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="domain"
+                />
+              </div>
+              <div class="form-group">
+                <label>Max File Size Limit</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="maxFileSizeLimit"
+                />
+              </div>
+              <div
+                style="font-size: 13px; margin-left: 10.7rem; margin-top: -14px"
+              >
+                File Size is in MB.
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="right-logo">
+            <div class="image-preview mb-3">
+              <img
+                [src]="orgImage"
+                height="40px"
+                style="max-width: fit-content"
+              />
+            </div>
+            <div class="upload-btn-wrapper">
+              <button class="uploadbtn">Upload a file</button>
+              <input
+                type="file"
+                #Image
+                (change)="fileOnSelect($event)"
+                accept=".png, .jpg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="organisationAuthSetting" class="authentication-setting">
+      <div class="wrapper">
+        <form [formGroup]="authenticationSetting">
+          <div class="title">Authentication Options</div>
+          <div class="form-group">
+            <label class="check">
+              <input
+                type="checkbox"
+                (change)="onChange()"
+                formControlName="isGoogleEnable"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <i class="fab fa-google"></i>
+            <p>&nbsp; Google</p>
+          </div>
+          <div class="form-group">
+            <label class="check">
+              <input
+                type="checkbox"
+                (change)="onChange()"
+                formControlName="isFacebookEnable"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <i class="fab fa-facebook"></i>
+            <p>&nbsp; Facebook</p>
+          </div>
+          <div class="form-group">
+            <label class="check">
+              <input
+                type="checkbox"
+                (change)="onChange()"
+                formControlName="isLinkedInEnable"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <i class="fab fa-linkedin-in"></i>
+            <p>&nbsp; LinkedIn</p>
+          </div>
+          <div class="form-group">
+            <label class="check">
+              <input
+                type="checkbox"
+                (change)="onChange()"
+                formControlName="isMicrosoftEnable"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <i class="fab fa-microsoft"></i>
+            <p>&nbsp; Microsoft</p>
+          </div>
+          <div class="form-group">
+            <label class="check">
+              <input
+                type="checkbox"
+                (change)="onChange()"
+                formControlName="isGitHubEnable"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <i class="fab fa-github"></i>
+            <p>&nbsp; GitHub</p>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div *ngIf="organisationManagement" class="management-setting">
+      <div class="wrapper">
+        <form [formGroup]="userPermission">
+          <div class="title">Users permissions</div>
+          <div class="form-group">
+            <label class="check">
+              <input
+                type="checkbox"
+                (change)="onChange()"
+                formControlName="enableSelfRegister"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <i class="fas fa-user-plus"></i>
+            <p>&nbsp; Can User Self register</p>
+          </div>
+          <div class="form-group">
+            <label class="check">
+              <input
+                type="checkbox"
+                (change)="onChange()"
+                formControlName="enableDislike"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <i class="fas fa-thumbs-down"></i>
+            <p>&nbsp; Disable Unlike</p>
+          </div>
+          <div class="form-group">
+            <label class="check">
+              <input
+                type="checkbox"
+                (change)="onChange()"
+                formControlName="enableCustomTagging"
+              />
+              <span class="checkmark"></span>
+            </label>
+            <i class="fas fa-tags"></i>
+            <p>&nbsp; Is Custom Tagging allowed</p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="btn-div"
+      *ngIf="
+        organisationDetail || organisationAuthSetting || organisationManagement
+      "
+    >
+      <button
+        [disabled]="loading"
+        class="btn"
+        (click)="SaveOrganisationSetting()"
+      >
+        <span
+          *ngIf="loading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        <span *ngIf="!loading">Save</span>
+      </button>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>

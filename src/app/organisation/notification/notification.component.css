@@ -1,0 +1,130 @@
+.btn:hover  {
+  display: block;
+  background-color: rgb(247, 243, 243);
+}
+.col{
+font-size:16px;
+font-weight:500;
+}
+.notify-title{
+flex:1;
+max-width: 100%;
+}
+.btn{
+background-color: transparent;
+border: none;
+float:right;
+color:steelblue;
+}
+.clear{
+  cursor: pointer;
+
+}
+.clear:hover{
+  text-decoration: underline;
+}
+.btn:focus {
+outline: 0;
+box-shadow: none;
+background-color: transparent;
+}
+.row{
+margin:2px -25px 3px -10px;
+}
+
+i.fas{
+height: 10px;
+width: 10px;
+margin-top: 2px;
+}
+
+i.fa {
+background: #ffff;
+display: inline-block;
+border-radius: 60px;
+box-shadow: 0px 0px 2px #888;
+padding: 0.5em 0.6em;
+
+}
+
+
+.card-body {
+flex: 1 1 auto;
+min-height: 1px;
+padding-bottom: 5px;
+padding-top: 5px;
+
+}
+.card-body .mb-2{
+margin-bottom: 0px !important;
+}
+.card-body:hover .editbtn {
+visibility: visible;
+}
+.card-body:hover {
+background: #e9ecef;
+}
+
+.dropdown-menu.show {
+display: block;
+width: 80px;
+}
+ul.dropdown-menu.show {
+transform: translate3d(-120px, 38px, 0px) !important;
+}
+ul.context.dropdown-menu.show {
+transform: translate3d(0px, 38px, 0px) !important;
+}
+
+.modal-title{
+font-size: 16px;
+margin-bottom: 0;
+margin-top: 0px;
+}
+.position-absolute {
+position: unset;
+}
+span.badge.rounded-pill.bg-primary {
+/* margin-top: -10px; */
+position: absolute;
+}
+
+.dropdown-menu li a{
+display: block;
+width: 100%;
+padding: .25rem .8rem;
+clear: both;
+font-weight: 400;
+color: #212529;
+text-align: inherit;
+white-space: nowrap;
+background-color: transparent;
+border: 0;
+}
+button.btn.btn-default.editbtn {
+visibility: hidden;
+}
+/* .dropdown{
+visibility: hidden;
+
+}
+.dropdown:hover   {
+visibility:visible;
+}  */
+
+/* .ellipsis a{
+visibility:hidden;
+float: right;
+}
+.ellipsis:hover a  {
+visibility:visible;
+z-index: 2;
+} */
+/* div span.only-show-on-hover {
+visibility: hidden;
+float: right;
+}
+div:hover span.only-show-on-hover {
+visibility: visible;
+}  */
+

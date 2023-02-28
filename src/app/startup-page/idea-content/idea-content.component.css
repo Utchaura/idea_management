@@ -1,0 +1,21 @@
+.jumbotron {
+  border-radius: 0;
+  margin-bottom: 0rem;
+  background-color: #f2b139;
+  background-image: url(https://oroinc.com/wp-content/uploads/2021/01/hero.jpg) !important;
+  color: white;
+}
+
+.text-large {
+  font-size: 20px;
+  line-height: 1.78;
+}
+.btn {
+  padding: 12px 30px !important;
+  background: #36454f;
+  color: white;
+}
+
+.btn:hover {
+  background: black;
+}

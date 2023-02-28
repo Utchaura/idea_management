@@ -1,0 +1,927 @@
+<script>
+  var header = document.getElementByClassName("topNavigation");
+  var btns = header.getElementsByClassName("text");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function () {
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+    });
+  }
+</script>
+
+<div class="wrapper-pd">
+  <div class="left border-right">
+    <div class="menu-parent">
+      <div class="topNavigation">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a
+            class="list-group-item list-group-item-action active"
+            data-toggle="list"
+            (click)="editDetail()"
+            role="tab"
+            aria-controls="home"
+            >General</a
+          >
+          <!-- <div *ngFor="let role of rolevalues"> -->
+          <a
+            *ngIf="userid && userRolesVisibility"
+            class="list-group-item list-group-item-action"
+            data-toggle="list"
+            (click)="editRoles()"
+            role="tab"
+            aria-controls="profile"
+            >User Roles</a
+          >
+
+          <a
+           *ngIf="UId === user_Id"
+            class="list-group-item list-group-item-action"
+            data-toggle="list"
+            (click)="changePassword()"
+            role="tab"
+            aria-controls="profile"
+            >Change Password</a
+          >
+        <!-- </div> -->
+
+          <!--  <a class="list-group-item list-group-item-action"  data-toggle="list"
+          (click)=(click)="editPermissions()" role="tab" aria-controls="profile">User Permissions</a> -->
+        </div>
+
+        <!-- <li class="list-items"  (click)="editDetail()">
+          <a class="text active" > General </a>
+        </li>
+        <li class="list-items" (click)="editRoles()">
+          <a class="text"> User Roles </a>
+        </li> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div *ngIf="userDetail">
+      <div class="row ml-0">
+        <div class="col-8">
+          <div class="wrapper">
+            <form [formGroup]="userEditForm" *ngIf="userid" id="form">
+              <div class="title">Personal Details</div>
+
+
+              <div class="form-group" *ngIf="userid">
+                <label>Email Address</label>
+                <input
+                  type="text"
+                  class="form-control input-lg"
+                  id="emailId"
+                  name="emailId"
+                  formControlName="emailId"
+                  readonly
+                />
+              </div>
+
+              <div class="form-group" *ngIf="!userid">
+                <label>Email Address</label>
+                <input
+                  type="text"
+                  class="form-control input-lg"
+                  id="emailId"
+                  name="emailId"
+                  formControlName="emailId"
+                />
+
+              </div>
+
+              <div class="form-group">
+                <label>First Name<span style="color: red">*</span></label>
+                <input
+                  type="text"
+                  class="form-control input-lg"
+                  id="firstName"
+                  name="firstName"
+                  formControlName="firstName"
+                  [ngClass]="{
+                    'is-invalid':
+                      userEditForm.get('firstName').touched &&
+                      userEditForm.get('firstName').invalid
+                  }"
+                />
+                <div
+                  *ngIf="
+                    userEditForm.get('firstName').touched &&
+                    userEditForm.get('firstName').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    style="color: rgb(238, 28, 28); font-size: 13px"
+                    *ngIf="userEditForm.get('firstName').errors?.required"
+                  >
+                    Please enter First Name
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Last Name<span style="color: red">*</span></label>
+                <input
+                  type="text"
+                  class="form-control input-lg"
+                  id="lastName"
+                  name="lastName"
+                  formControlName="lastName"
+                  [ngClass]="{
+                    'is-invalid':
+                      userEditForm.get('lastName').touched &&
+                      userEditForm.get('lastName').invalid
+                  }"
+                />
+                <div
+                  *ngIf="
+                    userEditForm.get('lastName').touched &&
+                    userEditForm.get('lastName').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    style="color: rgb(238, 28, 28); font-size: 13px"
+                    *ngIf="userEditForm.get('lastName').errors?.required"
+                  >
+                    Please enter Last Name
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- <div class="form-group">
+                <label>Mobile No<span style="color: red">*</span></label>
+                <input
+                  class="form-control input-lg"
+                  resize="vertical"
+                  id="mobileNo"
+                  name="mobileNo"
+                  formControlName="mobileNo"
+                  [ngClass]="{
+                    'is-invalid':
+                      userEditForm.get('mobileNo').touched &&
+                      userEditForm.get('mobileNo').invalid
+                  }"
+                />
+                <div
+                  *ngIf="
+                    userEditForm.get('mobileNo').touched &&
+                    userEditForm.get('mobileNo').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    style="color: rgb(238, 28, 28); font-size: 13px"
+                    *ngIf="userEditForm.get('mobileNo').errors?.required"
+                  >
+                    Please enter Mobile Number
+                  </div>
+
+                  <div
+                  style="color: rgb(238, 28, 28)"
+                  class="new-label fl_lt"
+                  id="mobileNo"
+                  *ngIf="userEditForm.get('mobileNo').errors?.pattern"
+                >
+                  <small>Please provide a valid Mobile Number</small>
+                </div>
+                </div>
+              </div> -->
+
+              <div class="title">Designation Details</div>
+
+              <div class="form-group">
+                <label>Headline</label>
+                <input
+                  class="form-control input-lg"
+                  resize="vertical"
+                  id="headline"
+                  name="headline"
+                  formControlName="headline"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Current Position</label>
+                <input
+                  class="form-control input-lg"
+                  resize="vertical"
+                  id="currentposition"
+                  name="currentposition"
+                  formControlName="currentPosition"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Skills</label>
+                <input
+                  class="form-control input-lg"
+                  resize="vertical"
+                  id="skills"
+                  name="skills"
+                  formControlName="skills"
+                />
+              </div>
+
+              <div class="title">Location Details</div>
+
+              <div class="form-group">
+                <label>Location</label>
+                <input
+                  class="form-control input-lg"
+                  resize="vertical"
+                  id="location"
+                  name="location"
+                  formControlName="location"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Address</label>
+                <input
+                  class="form-control input-lg"
+                  resize="vertical"
+                  id="address"
+                  name="address"
+                  formControlName="address"
+                />
+              </div>
+
+              <div class="title">Other Details</div>
+
+              <div class="form-group">
+                <label>Date Of Birth</label>
+                <mat-form-field appearance="fill" class="dob">
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    formControlName="dateOfBirth"
+                    data-date-format="YYYY-MM-DD"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group">
+                <label>Date Of Joining</label>
+                <mat-form-field appearance="fill" class="doj">
+                  <input
+                    matInput
+                    [matDatepicker]="picker1"
+                    formControlName="dateOfJoining"
+                    data-date-format="YYYY-MM-DD"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker1"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group">
+                <label class="check">
+                  <input type="checkbox" formControlName="active" />
+                  <span class="checkmark">&nbsp; Active</span>
+                </label>
+              </div>
+            </form>
+
+            <form [formGroup]="userCreateForm" *ngIf="!userid" id="form">
+                    <div class="title">Personal Details</div>
+
+                    <div class="form-group">
+                      <label
+                        >Email Address<span style="color: red">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control input-lg"
+                        id="emailId"
+                        name="emailId"
+                        formControlName="emailId"
+                        [ngClass]="{
+                          'is-invalid':
+                            userCreateForm.get('emailId').touched &&
+                            userCreateForm.get('emailId').invalid
+                        }"
+                      />
+
+                      <div
+                        *ngIf="
+                          userCreateForm.get('emailId').touched &&
+                          userCreateForm.get('emailId').invalid
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div
+                          style="color: rgb(238, 28, 28)"
+                          class="new-label fl_lt"
+                          id="emailId"
+                          *ngIf="userCreateForm.get('emailId').errors?.required"
+                        >
+                          <small>Email required</small>
+                        </div>
+
+                        <div
+                          style="color: rgb(238, 28, 28)"
+                          class="new-label fl_lt"
+                          id="emailId"
+                          *ngIf="userCreateForm.get('emailId').errors?.email"
+                        >
+                          <small>Please provide a valid email Address</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>First Name<span style="color: red">*</span></label>
+                      <input
+                        type="text"
+                        class="form-control input-lg"
+                        id="firstName"
+                        name="firstName"
+                        formControlName="firstName"
+                        [ngClass]="{
+                          'is-invalid':
+                            userCreateForm.get('firstName').touched &&
+                            userCreateForm.get('firstName').invalid
+                        }"
+                      />
+
+                      <div
+                        *ngIf="
+                          userCreateForm.get('firstName').touched &&
+                          userCreateForm.get('firstName').invalid
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div
+                          style="color: rgb(238, 28, 28)"
+                          class="new-label fl_lt"
+                          id="firstName"
+                          *ngIf="
+                            userCreateForm.get('firstName').errors?.required
+                          "
+                        >
+                          <small>First Name is required</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Last Name<span style="color: red">*</span></label>
+                      <input
+                        type="text"
+                        class="form-control input-lg"
+                        id="lastName"
+                        name="lastName"
+                        formControlName="lastName"
+                        [ngClass]="{
+                          'is-invalid':
+                            userCreateForm.get('lastName').touched &&
+                            userCreateForm.get('lastName').invalid
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          userCreateForm.get('lastName').touched &&
+                          userCreateForm.get('lastName').invalid
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div
+                          style="color: rgb(238, 28, 28)"
+                          class="new-label fl_lt"
+                          id="lastName"
+                          *ngIf="
+                            userCreateForm.get('lastName').errors?.required
+                          "
+                        >
+                          <small>Last Name is required</small>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <!-- <div class="form-group">
+                      <label>Mobile No<span style="color: red">*</span></label>
+                      <input
+                        class="form-control input-lg"
+                        resize="vertical"
+                        id="mobileNo"
+                        name="mobileNo"
+                        formControlName="mobileNo"
+                        [ngClass]="{
+                          'is-invalid':
+                            userCreateForm.get('mobileNo').touched &&
+                            userCreateForm.get('mobileNo').invalid
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          userCreateForm.get('mobileNo').touched &&
+                          userCreateForm.get('mobileNo').invalid
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div
+                          style="color: rgb(238, 28, 28)"
+                          class="new-label fl_lt"
+                          id="mobileNo"
+                          *ngIf="userCreateForm.get('mobileNo').errors?.required"
+                        >
+                          <small> Mobile Number is required</small>
+                        </div>
+                        <div
+                        style="color: rgb(238, 28, 28)"
+                        class="new-label fl_lt"
+                        id="emailId"
+                        *ngIf="userCreateForm.get('mobileNo').errors?.pattern"
+                      >
+                        <small>Please provide a valid Mobile Number</small>
+                      </div>
+                      </div>
+                    </div> -->
+
+                    <div class="form-group">
+                      <label>Password<span style="color: red">*</span></label>
+                      <input
+                        type="password"
+                        class="form-control input-lg"
+                        resize="vertical"
+                        id="password"
+                        name="password"
+                        formControlName="password"
+                        [ngClass]="{
+                          'is-invalid':
+                            userCreateForm.get('password').touched &&
+                            userCreateForm.get('password').invalid
+                        }"
+                        required="true"
+                      />
+                      <div
+                        *ngIf="
+                          userCreateForm.get('password').touched &&
+                          userCreateForm.get('password').invalid
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div
+                          style="color: rgb(238, 28, 28)"
+                          class="new-label fl_lt"
+                          id="password"
+                          *ngIf="
+                            userCreateForm.get('password').errors?.required
+                          "
+                        >
+                          <small>Password is required</small>
+                        </div>
+
+                        <div
+                          style="color: rgb(238, 28, 28)"
+                          class="new-label fl_lt"
+                          id="password"
+                          *ngIf="userCreateForm.get('password').errors?.pattern"
+                        >
+                          <small style="margin-right: 10px"
+                            >Password must have a capital case,small case
+                            letter,special character and minimum length is of 5
+                            characters.</small
+                          >
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label
+                        >Confirm Password<span style="color: red"
+                          >*</span
+                        ></label
+                      >
+                      <input
+                        type="password"
+                        class="form-control input-lg"
+                        resize="vertical"
+                        id="confirmpswd"
+                        name="confirmpswd"
+                        formControlName="confirmpswd"
+                        [ngClass]="{
+                          'is-invalid':
+                            userCreateForm.get('confirmpswd').touched &&
+                            userCreateForm.get('confirmpswd').invalid
+                        }"
+                        appConfirmEqualValidator="password"
+                      />
+                      <div
+                        *ngIf="
+                          userCreateForm.get('confirmpswd').touched &&
+                          userCreateForm.get('confirmpswd').invalid
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div
+                          style="color: rgb(238, 28, 28)"
+                          class="new-label fl_lt"
+                          id="confirmpswd"
+                          *ngIf="
+                            userCreateForm.get('confirmpswd').errors.required
+                          "
+                        >
+                          <small>Password is required</small>
+                        </div>
+
+                        <div
+                          style="color: rgb(238, 28, 28)"
+                          class="new-label fl_lt"
+                          id="confirmpswd"
+                          *ngIf="
+                            userCreateForm.get('confirmpswd').errors.MustMatch
+                          "
+                        >
+                          <small>
+                            Password and Confirm password must be same</small
+                          >
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="title">Designation Details</div>
+
+                    <div class="form-group">
+                      <label>Headline</label>
+                      <input
+                        class="form-control input-lg"
+                        resize="vertical"
+                        id="headline"
+                        name="headline"
+                        formControlName="headline"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label>Current Position</label>
+                      <input
+                        class="form-control input-lg"
+                        resize="vertical"
+                        id="currentposition"
+                        name="currentposition"
+                        formControlName="currentPosition"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label>Skills</label>
+                      <input
+                        class="form-control input-lg"
+                        resize="vertical"
+                        id="skills"
+                        name="skills"
+                        formControlName="skills"
+                      />
+                    </div>
+
+                    <div class="title">Location Details</div>
+
+                    <div class="form-group">
+                      <label>Location</label>
+                      <input
+                        class="form-control input-lg"
+                        resize="vertical"
+                        id="location"
+                        name="location"
+                        formControlName="location"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label>Address</label>
+                      <input
+                        class="form-control input-lg"
+                        resize="vertical"
+                        id="address"
+                        name="address"
+                        formControlName="address"
+                      />
+                    </div>
+
+                    <div class="title">Other Details</div>
+
+                    <div class="form-group">
+                      <label>Date Of Birth</label>
+                      <mat-form-field appearance="fill" class="dob">
+                        <input
+                          matInput
+                          [matDatepicker]="picker"
+                          formControlName="dateOfBirth"
+                          data-date-format="YYYY-MM-DD"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Date Of Joining</label>
+                      <mat-form-field appearance="fill" class="doj">
+                        <input
+                          matInput
+                          [matDatepicker]="picker1"
+                          formControlName="dateOfJoining"
+                          data-date-format="YYYY-MM-DD"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker1"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+
+                    <!-- <div class="form-group" style="margin-top:10px;">
+          <label>Country</label>
+        <mat-select-country appearance="fill"
+        class="country"
+        formControlName="country"
+        (onCountrySelected)="onCountrySelected($event)"
+        [itemsLoadSize]="5"
+         >
+        </mat-select-country>
+        </div> -->
+
+
+
+            </form>
+          </div>
+        </div>
+        <div class="col-4" *ngIf="userid">
+          <div class="wrapper" style="margin-top: 76px; margin-left: 105px">
+            <div class="image-preview mb-3" *ngIf="profile">
+              <img [src]="profile" height="110" width="120" style="border-radius: 50%;"/>
+            </div>
+            <div class="image-preview mb-3" *ngIf="!profile">
+              <img src="./../../assets/admin.png" height="110" width="120" style="border-radius: 50%;" />
+            </div>
+            <div class="upload-btn-wrapper">
+              <button class="uploadbtn btn">Upload Picture</button>
+              <input
+                type="file"
+                name="image"
+                (change)="fileOnSelect($event)"
+                accept=".png, .jpg"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- To upload cover image -->
+        <div class="col-4" *ngIf="userid">
+          <div class="wrapper" style="margin-top: -631px; margin-left: 695px">
+            <div class="image-preview mb-3" *ngIf="cover">
+              <img [src]="cover" height="110" width="160" style="border-radius: 50%;" />
+            </div>
+            <div class="image-preview mb-3" *ngIf="!cover">
+              <img src="./../../assets/admin.png" height="110" width="120" style="border-radius: 50%;" />
+            </div>
+            <div class="upload-btn-wrapper">
+              <button class="uploadbtn btn">Upload Cover Picture</button>
+              <input
+                type="file"
+                name="coverImage"
+                (change)="coverImageSelect($event)"
+                accept=".png, .jpg"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4" *ngIf="!userid">
+          <div class="wrapper" style="margin-top: 76px; margin-left: 105px">
+            <div class="image-preview mb-3" *ngIf="userImage">
+              <img  [src]="userImage" height="110" width="120" style="border-radius: 50%;" />
+            </div>
+            <div class="image-preview mb-3" *ngIf="!userImage">
+              <img src="./../../assets/admin.png" height="110" width="120" style="border-radius: 50%;"/>
+            </div>
+            <div class="upload-btn-wrapper">
+              <button class="uploadbtn btn">Upload Picture</button>
+              <input
+                type="file"
+                name="image"
+                (change)="fileOnSelecting($event)"
+                accept=".png, .jpg"
+              />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="userRoles" class="role-setting">
+      <div class="wrapper">
+        <!-- <form [formGroup]="myForm"> -->
+        <div class="title">User Roles Options</div>
+
+        <div>
+          <div class="form-group">
+            <label class="checktab">
+
+              <input
+              type="checkbox"
+              [value]="1"
+              [(ngModel)]="InvalidUser"
+              (change)="onChangeRole($event)"
+
+                 />
+              <span class="checkmark"></span>
+            </label>
+            <p class="checkspace">&nbsp; Unlicensed User</p>
+          </div>
+        </div>
+        <div *ngFor="let n of roles">
+          <div class="form-group">
+            <label class="checktab">
+
+              <input
+                type="checkbox"
+                [value]="n.value"
+                [checked]="n.select"
+                (change)="onChangeRole($event)"
+
+                 />
+              <span class="checkmark"></span>
+            </label>
+            <p class="checkspace">&nbsp; {{ n.role }}</p>
+          </div>
+        </div>
+        <!-- </form> -->
+      </div>
+    </div>
+
+      <div *ngIf="PasswordSection" class="permission-setting">
+            <div class="wrapper">
+                <form
+                [formGroup]="forgotPassword"
+                name="forgotPassword"
+                (ngSubmit)="forgotPassword.valid"
+              >
+                <div class="form-group">
+                  <input
+                  type="password"
+                  class="form-control input-lg"
+                  id="currentPassword"
+                  name="currentPassword"
+                  formControlName="currentPassword"
+                  placeholder="Current Password"
+                  [ngClass]="{
+                    'is-invalid':
+                    forgotPassword.get('currentPassword').touched &&
+                    forgotPassword.get('currentPassword').invalid
+                  }"
+                />
+                <div
+                  *ngIf="
+                  forgotPassword.get('currentPassword').touched &&
+                  forgotPassword.get('currentPassword').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    style="color: rgb(238, 28, 28); font-size: 12px"
+                    id="firstname"
+                    *ngIf="forgotPassword.get('currentPassword').errors?.required"
+                  >
+                    Current password is required
+                  </div>
+                </div>
+                </div>
+
+                <div class="form-group">
+                  <input
+                  type="password"
+                  class="form-control input-lg"
+                  id="newPassword"
+                  name="newPassword"
+                  formControlName="newPassword"
+                  placeholder="New Password"
+                  [ngClass]="{
+                    'is-invalid':
+                    forgotPassword.get('newPassword').touched &&
+                    forgotPassword.get('newPassword').invalid
+                  }"
+                />
+                <div
+                  *ngIf="
+                  forgotPassword.get('newPassword').touched &&
+                  forgotPassword.get('newPassword').invalid
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    style="color: rgb(238, 28, 28); font-size: 12px"
+                    id="firstname"
+                    *ngIf="forgotPassword.get('newPassword').errors?.required"
+                  >
+                    New password is required
+                  </div>
+                </div>
+                </div>
+
+                <div class="button-border">
+                  <button type="submit" [disabled]="!forgotPassword.valid" id="login" class="btn" (click)="changePasswordSecurity()">
+                    <span>Save Password</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+           </div>
+
+    <!-- <div *ngIf="userPermissions" class="permission-setting">
+            <div class="wrapper">
+              <form [formGroup]="userPermissionsForm">
+                <div class="title">
+                  User Permissions Options
+                </div>
+                <div class="form-group">
+                    <label class="checktab">
+                      <input type="checkbox"  formControlName="canCreateIdea">
+                      <span class="checkmark"></span>
+                    </label>
+                    <p class="checkspace">&nbsp; Create Idea</p>
+                 </div>
+                <div class="form-group">
+                    <label class="checktab">
+                      <input type="checkbox"  formControlName="canDeleteIdea">
+                      <span class="checkmark"></span>
+                    </label>
+                    <p class="checkspace">&nbsp; Delete Idea</p>
+                 </div>
+                 <div class="form-group">
+                  <label class="checktab">
+                    <input type="checkbox"  formControlName="canApproveIdea">
+                    <span class="checkmark"></span>
+                  </label>
+                  <p class="checkspace">&nbsp; Approve Idea</p>
+               </div>
+              <div class="form-group">
+                  <label class="checktab">
+                    <input type="checkbox"  formControlName="canAccessIdea">
+                    <span class="checkmark"></span>
+                  </label>
+                  <p class="checkspace">&nbsp; Access Idea</p>
+               </div>
+                </form>
+            </div>
+           </div> -->
+
+    <!-- <div class="btn-div" *ngIf="userDetail || userRoles ||userPermissions"> -->
+    <div class="btn-div" *ngIf="userDetail || userRoles">
+      <button
+        *ngIf="userid"
+        [disabled]="loading"
+        class="btn"
+        (click)="userEditForm.valid && onSubmit()"
+      >
+        <span
+          *ngIf="loading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        <span *ngIf="!loading">Save</span>
+        <br/>
+      </button>
+    </div>
+
+    <div class="btn-div" *ngIf="userDetail">
+      <button
+        *ngIf="!userid"
+        [disabled]="loading"
+        class="btn"
+        (click)="userCreateForm.valid && onSave()"
+      >
+        <span
+          *ngIf="loading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        <span *ngIf="!loading">Save</span>
+        <br/>
+      </button>
+    </div>
+    <br/>
+  </div>
+</div>

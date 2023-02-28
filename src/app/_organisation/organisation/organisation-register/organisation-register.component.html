@@ -1,0 +1,285 @@
+<app-navbar></app-navbar>
+<div class="container-reg">
+  <div class="container p-4">
+    <ng-container>
+      <div
+        *ngIf="alerterr"
+        class="alert alert-warning alert-dismissible fade show"
+        role="alert"
+      >
+        <strong></strong> {{ ErrorMessage }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div
+        *ngIf="alertsuccess"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+      >
+        <strong></strong> {{ successMessage }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form
+        [formGroup]="registerForm"
+        id="form"
+        (ngSubmit)="onSubmit()"
+      >
+        <h4 id="heading">Register For The Organisation</h4>
+        <br />
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="cname" id="cname"
+              >Company Name<span
+                style="color: rgb(238, 28, 28); font-weight: 800"
+                class="form-required"
+                >*</span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control input-lg"
+              id="cname"
+              name="cname"
+              formControlName="cname"
+            />
+            <div *ngIf="submitted && f.cname.errors|| registerForm.get('cname').touched &&
+            registerForm.get('cname').invalid ">
+              <div class="err" *ngIf="f.cname.errors.required">Company Name is Required.</div>
+            </div>
+           
+          </div>
+          <div class="col-sm-6">
+            <label for="website" id="website">Website</label>
+            <input
+              type="text"
+              class="form-control input-lg"
+              id="website"
+              name="website"
+              formControlName="website"
+            />
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="country" id="country"
+              >Country<span
+                style="color: rgb(238, 28, 28); font-weight: 800"
+                class="form-required"
+                >*</span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control input-lg"
+              id="country"
+              name="country"
+              formControlName="country"
+            
+            />
+             <div *ngIf="submitted && f.country.errors|| registerForm.get('country').touched &&
+            registerForm.get('country').invalid ">
+              <div class="err" *ngIf="f.country.errors.required">  Country is required.</div>
+            </div>
+          
+          </div>
+          <div class="col-sm-6">
+            <label for="email" id="email"
+              >Email<span
+                style="color: rgb(238, 28, 28); font-weight: 800"
+                class="form-required"
+                >*</span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control input-lg"
+              id="email"
+              name="email"
+              formControlName="email"
+            
+            />
+            <div *ngIf="submitted && f.email.errors|| registerForm.get('email').touched &&
+            registerForm.get('email').invalid ">
+              <div class="err" *ngIf="f.email.errors.required"> Email is required.</div>
+            </div>
+          
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="password" id="password"
+              >Password<span
+                style="color: rgb(238, 28, 28); font-weight: 800"
+                class="form-required"
+                >*</span
+              ></label
+            >
+            <input
+              type="password"
+              class="form-control input-lg"
+              id="password"
+              name="password"
+              formControlName="password"
+              
+              required="true"
+            />
+            <div *ngIf="submitted && f.password.errors|| registerForm.get('password').touched &&
+            registerForm.get('password').invalid ">
+              <div class="err" *ngIf="f.password.errors.required">Password is Required.</div>
+            </div>
+          
+          </div>
+          <div class="col-sm-6">
+            <label for="confirmpswd" id="confirmpswd">Confirm Password</label>
+            <input
+              type="password"
+              class="form-control input-lg"
+              id="confirmpswd"
+              name="confirmpswd"
+              formControlName="confirmpswd"
+
+              appConfirmEqualValidator="password"
+            />
+          
+            <div
+            *ngIf="submitted && f.confirmpswd.errors|| registerForm.get('confirmpswd').touched &&
+            registerForm.get('confirmpswd').invalid "
+            >
+            <div class="err" *ngIf="f.confirmpswd.errors.required">Password is Required.</div>
+            <div class="err" *ngIf="f.confirmpswd.errors.MustMatch">  Password and Confirm password must be same.</div>
+          
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="address" id="address">Company Address</label>
+            <textarea
+              class="form-control input-lg"
+              resize="vertical"
+              id="address"
+              name="address"
+              formControlName="address"
+            ></textarea>
+          </div>
+          <div class="col-sm-6">
+            <label for="domain" id="domain"
+              >Domain Name<span
+                style="color: rgb(238, 28, 28); font-weight: 800"
+                class="form-required"
+                >*</span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control input-lg"
+              id="domain"
+              name="domain"
+              formControlName="domain"
+            />
+            <div *ngIf="submitted && f.domain.errors|| registerForm.get('domain').touched &&
+            registerForm.get('domain').invalid ">
+              <div class="err" *ngIf="f.domain.errors.required">Domain Name is required.</div>
+            </div>
+           
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-sm-6">
+            <label>Organisation Logo</label>
+            <div class="form-group">
+              <input
+                type="file"
+                #Image
+                (change)="fileOnSelect($event)"
+                accept=".png, .jpg"
+              />
+            </div>
+            <div class="image-preview mb-3" *ngIf="orgImage">
+              <img [src]="orgImage" height="100" width="100" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <ngx-recaptcha2
+                #captchaElem
+                [siteKey]="siteKey"
+                formControlName="recaptcha"
+               
+              >
+              </ngx-recaptcha2>
+              <div *ngIf="submitted && f.recaptcha.errors|| registerForm.get('recaptcha').touched &&
+              registerForm.get('recaptcha').invalid ">
+                <div class="err" *ngIf="f.recaptcha.errors.required"> Please Verify that you are not a Robot!</div>
+              </div>
+             
+              
+            </div>
+          </div>
+        </div>
+        <br />
+        <br />
+        <div id="terms">
+          <label class="checkbox-inline">
+            <input
+              type="checkbox"
+              class="largerCheckbox"
+              formControlName="privacycheck"
+              (change)="privacy()"
+            />
+           
+            &nbsp; I allow you to store and process my personal data according
+            to your Privacy Policies *.
+          </label>
+          <div *ngIf="submitted && f.privacycheck.errors|| registerForm.get('privacycheck').touched &&
+          registerForm.get('privacycheck').invalid ">
+            <div class="err" *ngIf="f.privacycheck.errors.required"> Please Accept and Agree the policy!</div>
+          </div>
+          <br /><br />
+          <button
+            class="button-create"
+            type="submit"
+          >
+            <span
+              *ngIf="ShowLoader"
+              class="spinner-grow spinner-grow-sm"
+              aria-hidden="true"
+            ></span>
+            <span *ngIf="!ShowLoader">Create New Organisation</span>
+            <span *ngIf="ShowLoader">Loading...</span>
+          </button>
+          <br />
+          <br />
+          <!-- <br />
+          <span
+            >Already Registered an Organisation?
+            <a
+              routerLink="/org/login"
+              routerLinkActive="active"
+              style="color: #fcb91d"
+            >
+              Sign In</a
+            ></span
+          > -->
+        </div>
+      </form>
+    </ng-container>
+  </div>
+</div>

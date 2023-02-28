@@ -1,0 +1,61 @@
+
+  <div class="wrapper">
+    <div id="divcontent">
+        <div class="pr-2">
+          <div data-layout="separate" class="grid-views">
+            <div class="grid-views__header">
+              <div class="left">
+              <h2
+                id="grid-title-frontend-customer-customer-user-grid289"
+                class="grid-views__title"
+                data-toggle="dropdown"
+                data-popper="false"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+               <b> All Teams </b></h2>
+               </div>
+               <div class="add">
+                <a class="btn " (click)="ShowTeamForm(TeamForm)" >Create new Team</a>
+               </div>
+               <div class="clear"></div>
+            </div>
+          </div>
+
+          <dx-data-grid
+            id="gridContainer"
+            [dataSource]="teamlist"
+            [showBorders]="true"
+            [selectedRowKeys]="[]"
+            [hoverStateEnabled]="true"
+            (onRowRemoving)="onDeleting($event)"
+            (onEditingStart)="onEdit($event,TeamForm)"
+          >
+          <!--  (onSaving)="onSaving($event)" -->
+            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxo-search-panel [visible]="true"></dxo-search-panel>
+            <dxo-editing
+            [allowDeleting]="true"
+            [allowUpdating]="true"
+            [useIcons]="true">
+
+          >
+            </dxo-editing>
+            <dxi-column dataField="code" [allowEditing]="false"></dxi-column>
+            <dxi-column dataField="description"></dxi-column>
+            <dxi-column dataField="OrganisationTeamUsers"></dxi-column>
+          </dx-data-grid>
+        </div>
+        </div>
+        </div>
+
+
+
+        <ng-template #TeamForm let-modal>
+          <span class="PopupClose" (click)="modal.dismiss('Cross click')"><img src="./../../assets/close-tab.png" /></span>
+          <div class="modal-body" style="margin-top: 20px;">
+            <app-team-form [team_id]="Teamid"></app-team-form>
+          </div>
+        </ng-template>
+        <router-outlet></router-outlet>
+        <!-- <app-team></app-team> -->

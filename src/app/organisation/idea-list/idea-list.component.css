@@ -1,0 +1,82 @@
+.wrapper {
+  width: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
+  background-size: cover;
+  min-height: 100vh;
+  /* max-width: 1180px; */
+  max-width: 1226px;
+  margin: 0 auto;
+}
+
+
+.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+.search {
+ position: absolute;
+ top: 0;
+ right: 0;
+}
+
+button.mat-focus-indicator.mr-2.list-group-item.list-group-item-action.active.mat-raised-button.mat-button-base {
+  width: fit-content;
+}
+
+.list-group-item+.list-group-item {
+  border-top-width: 0;
+  width: fit-content;
+}
+.HeaderTabBtn{
+  position: sticky;
+  top: 0px;
+  background: white;
+  z-index: 9;
+  display: inline-block;
+  margin-top: 0 !important;
+  padding: 10px 0 12px;
+  width: 100%;
+}
+.HeaderTabBtn .list-group-item{
+  border: none;
+  background-color: #ffffff;
+  color: #262626;
+  font-size: 12px;
+  padding: 0px 10px;
+  line-height: 30px;
+  border-radius: 2px;
+  cursor: pointer;
+  width: auto;
+}
+.HeaderTabBtn .list-group-item.active{
+  background-color: #367fc2;
+  color: #ffffff;
+}
+.SingleCardHeight{
+  height: calc(100vh - 50px);
+  overflow: auto;
+}
+
+.HeadSsearch{
+  float: right;
+  width: 185px;
+}
+.HeadSsearch input{
+  border: none;
+  border-bottom: 1px solid #dddddd;
+  font-size: 12px;
+  width: 100%;
+  margin-top: 7px;
+}
+.HeadSsearch input:focus{
+  outline: none;
+}
+.HeaderTabBtn .count{
+  background: #efefef;
+  padding: 0 5px;
+  border-radius: 2px;
+  font-size: 10px;
+  margin-left: 5px;
+  color: #262626;
+}

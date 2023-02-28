@@ -1,0 +1,260 @@
+<div style="height: calc(100vh - 50px);
+overflow: auto;
+display: block;">
+  <div class="wrapper">
+    <!-- remove inline css & add class -->
+    <div class="main-section-class" style="position: relative">
+      <div class="left">
+        <div class="Idea-type" style="padding-left: 0">
+          <!-- add class by Nandla -->
+          <div class="left-nav-menu">
+            <h2>Status</h2>
+            <ul>
+              <li
+                class="idea-type-list"
+                routerLink="/organisation/idea-main/fresh-idea"
+                (click)="changeIdeaStatus('Fresh Ideas')"
+                routerLinkActive="router-link"
+              >
+              <!-- <i class="far fa-lightbulb"></i>&nbsp;&nbsp; Details-Page <span style="color:black;float:right; ">
+                {{this.status.status.publish}}
+               </span>
+              </li>
+              <li
+                class="idea-type-list"
+                routerLink="/organisation/idea-main/under-evaluation-idea"
+                (click)="changeIdeaStatus('Under Evaluation Ideas')"
+                routerLinkActive="router-link"
+              > -->
+              <i class="far fa-lightbulb"></i>&nbsp;&nbsp; Fresh Ideas <span style="color:black;float:right; ">
+                {{this.status.status.publish}}
+               </span>
+              </li>
+              <li
+                class="idea-type-list"
+                routerLink="/organisation/idea-main/under-evaluation-idea"
+                (click)="changeIdeaStatus('Under Evaluation Ideas')"
+                routerLinkActive="router-link"
+              >
+              <i class="far fa-minus-square"></i>&nbsp; Under Evaluation Ideas<span style="color:black;float:right; ">
+                {{this.status.status.open}}
+               </span>
+              <li
+                class="idea-type-list"
+                routerLink="/organisation/idea-main/approved-idea"
+                (click)="changeIdeaStatus('Approved Ideas')"
+                routerLinkActive="router-link"
+              >
+              <i class="fas fa-clipboard-list"></i>&nbsp;&nbsp; Approved Ideas <span style="color:black;float:right; ">
+                {{this.status.status.approved}}
+               </span>
+              </li>
+              <li
+                class="idea-type-list"
+                routerLink="/organisation/idea-main/recent-idea"
+                (click)="changeIdeaStatus('Idea Backlog ')"
+                routerLinkActive="router-link"
+              >
+                <i class="far fa-bookmark"></i>&nbsp;&nbsp; Idea Backlog <span style="color:black;float:right; ">
+                  {{this.status.status.backlog}}
+                 </span>
+              </li>
+              <li
+                class="idea-type-list"
+                routerLink="/organisation/idea-main/under-approval-idea"
+                (click)="changeIdeaStatus('Under Approval Ideas')"
+                routerLinkActive="router-link"
+              >
+              <i class="far fa-bell"></i>&nbsp;&nbsp; Under Approval Ideas<span style="color:black;float:right; ">
+                {{this.status.status.underApproval}}
+               </span>
+                <!-- <span
+                  style="color: black; float: right"
+                >
+                  {{ underApproval }}
+                </span> -->
+              </li>
+              <li
+                class="idea-type-list"
+                routerLinkActive="router-link"
+                routerLink="/organisation/idea-main/my-reviewed-idea"
+                (click)="changeIdeaStatus('Draft Ideas')"
+              >
+              <i class="far fa-user"></i>&nbsp;&nbsp; Draft Ideas <span style="color:black;float:right; ">
+                {{this.status.status.draft}}
+               </span>
+                <!-- <span style="color: black; float: right">
+                  {{ draft }}
+                </span> -->
+              </li>
+              <li
+               *ngIf="this.needMyInput"
+                class="idea-type-list"
+                routerLinkActive="router-link"
+                routerLink="/organisation/idea-main/my-input-idea"
+                (click)="changeIdeaStatus('Ideas Need Input')"
+              >
+                <i class="fas fa-circle-notch"></i>&nbsp;&nbsp; Ideas Need Input
+                <span style="color:black;float:right; ">
+                  {{this.status.status.approver}}
+                 </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="middle">
+        <!-- <div class="idea-title">{{ IdeaStatus }}</div> -->
+        <div class="middle-section">
+          <div class="top-middle">
+            <mat-card class="example-card">
+              <div class="write-idea">
+                <img [src]="profilePic" class="img-profile" />
+                <p
+                  #PostElement
+                  id="testMultiple"
+                  class="tribute-demo-input"
+                  placeholder="Create, Share, Inspire"
+                  [ngxTribute]="tributeOptions"
+                  (paste)="onPaste($event)"
+                >
+              {{pastedText}}</p>
+                <br />
+                <div class="idea-upload-img" *ngIf="ideaImage">
+                  <img [src]="ideaImage" />
+                </div>
+              </div>
+              <div class="save-idea">
+                <div class="upload-btn-wrapper">
+                  <button class="uploadbtn"><i class="far fa-image"></i></button>
+                  <input
+                    type="file"
+                    #Image
+                    (change)="fileOnSelect($event)"
+                    accept=".png, .jpg"
+                  />
+                </div>
+
+                <div class="upload-btn-wrapper">
+                  <button class="uploadbtn">
+                    <i
+                      class="far fa-sticky-note img-icon"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                      title="Add description"
+                    ></i>
+                  </button>
+                </div>
+
+                <div
+                  class="modal fade"
+                  id="exampleModalCenter"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                          Description
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <!-- <textarea type="text" class="description" [(ngModel)]="description" placeholder="description" rows="10" cols="50"></textarea> -->
+                        <!-- <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="description"></angular-editor> -->
+                        <dx-html-editor [(ngModel)]="description" [height]="300">
+                          <dxo-toolbar>
+                            <dxi-item formatName="bold"></dxi-item>
+                            <dxi-item formatName="italic"></dxi-item>
+                            <dxi-item formatName="strike"></dxi-item>
+                            <dxi-item formatName="underline"></dxi-item>
+                            <dxi-item formatName="separator"></dxi-item>
+                            <dxi-item formatName="alignLeft"></dxi-item>
+                            <dxi-item formatName="alignCenter"></dxi-item>
+                            <dxi-item formatName="alignRight"></dxi-item>
+                            <dxi-item formatName="separator"></dxi-item>
+                            <dxi-item formatName="color"></dxi-item>
+                            <dxi-item formatName="orderedList"></dxi-item>
+                            <dxi-item formatName="bulletList"></dxi-item>
+                          </dxo-toolbar>
+                        </dx-html-editor>
+                      </div>
+                      <div class="modal-footer" style="padding: 30px">
+                        <button class="btn" data-dismiss="modal">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="save-idea-btn">
+                  <button
+                    [disabled]="loading"
+                    class="btn"
+                    (click)="createQuickIdea()"
+                  >
+                    <span
+                      *ngIf="loading"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    <span *ngIf="!loading">Save</span>
+                  </button>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+      <div class="right">
+        <div class="Idea-type" style="padding-left: 0">
+          <ul class="right-idea-list">
+            <!-- class add by nandlal 9-6-2021 -->
+            <li class="right-side-idea">
+              <div class="card mb-3">
+                <!-- remove inline bg-color by nandlal 9-6-2021 -->
+                <div class="card-header">Top Voted Ideas</div>
+                <div class="scroll">
+                  <app-top-voted-idea></app-top-voted-idea>
+                </div>
+              </div>
+            </li>
+
+            <li class="right-side-idea">
+              <div class="card mb-3">
+                <!-- remove inline bg-color by nandlal 9-6-2021 -->
+                <div class="card-header">Recently Changed Ideas</div>
+                <div class="scroll">
+                  <app-recent-change-idea></app-recent-change-idea>
+                </div>
+              </div>
+            </li>
+            <li class="right-side-idea">
+              <div class="card mb-3">
+                <!-- remove inline bg-color by nandlal 9-6-2021 -->
+                <div class="card-header">Just Approved Ideas</div>
+                <div class="scroll">
+                  <app-just-approved-idea></app-just-approved-idea>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+
+
+</div>

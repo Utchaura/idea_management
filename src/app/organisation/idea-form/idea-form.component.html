@@ -1,0 +1,393 @@
+<div class="container">
+  <form
+    class="IdeaForm"
+    name="form"
+    [formGroup]="form"
+    (ngSubmit)=" onSubmit()"
+  >
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="ideaTitle"> Idea Statement<span style="color: red">*</span></label>
+          <!-- <input
+            type="text"
+            class="form-control"
+            formControlName="ideaTitle"
+            [innerHTML]="statement | safeHtml"
+            [ngClass]="{
+              'is-invalid':
+                form.get('ideaTitle').touched && form.get('ideaTitle').invalid
+            }"
+            required
+          /> -->
+
+          <div
+            contenteditable="true"
+            #PostElement
+            id="testMultiple"
+            class="tribute-demo-input"
+            placeholder="Create, Share, Inspire"
+            [ngxTribute]="tributeOptions"
+            (paste)="onPaste($event)"
+             required
+          >
+          {{pastedText }}
+          </div>
+          <!-- <div *ngIf="submitted && f.ideaTitle.errors|| form.get('ideaTitle').touched &&
+          form.get('ideaTitle').invalid ">
+                  <div class="err" *ngIf="f.ideaTitle.errors.required"style="margin-top:-12px">ideaTitle is required</div>
+                </div> -->
+          <!-- <div class="invalid-feedback">
+            <div>Idea Title is required</div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+
+          <label for="description"> Description<span style="color: red">*</span></label>
+          <dx-html-editor
+            formControlName="description"
+            [height]="150"
+           required
+          >
+            <dxo-toolbar>
+              <dxi-item formatName="bold"></dxi-item>
+              <dxi-item formatName="italic"></dxi-item>
+              <dxi-item formatName="strike"></dxi-item>
+              <dxi-item formatName="underline"></dxi-item>
+              <dxi-item formatName="separator"></dxi-item>
+              <dxi-item formatName="alignLeft"></dxi-item>
+              <dxi-item formatName="alignCenter"></dxi-item>
+              <dxi-item formatName="alignRight"></dxi-item>
+              <dxi-item formatName="alignJustify"></dxi-item>
+              <dxi-item formatName="separator"></dxi-item>
+              <dxi-item formatName="color"></dxi-item>
+              <dxi-item formatName="background"></dxi-item>
+              <dxi-item formatName="separator"></dxi-item>
+              <dxi-item formatName="orderedList"></dxi-item>
+              <dxi-item formatName="bulletList"></dxi-item>
+            </dxo-toolbar>
+          </dx-html-editor>
+          <div *ngIf="submitted && f.description.errors|| form.get('description').touched &&
+          form.get('description').invalid ">
+                  <div class="err" *ngIf="f.description.errors.required">Description is required</div>
+                </div>
+          <!-- <div class="invalid-feedback">
+            <div>Description is required</div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="teams"> Teams</label>
+          <mat-form-field class="example-chip-list">
+            <mat-chip-list #chipListTeam aria-label="Team selection">
+              <mat-chip
+                *ngFor="let team of teams;"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="removeTeam(team)"
+              >
+                {{ team.description }}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input
+                #teamInput
+                [formControl]="teamCtrl"
+                [matAutocomplete]="autoTeam"
+                [matChipInputFor]="chipListTeam"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="addTeam($event)"
+              />
+            </mat-chip-list>
+            <mat-autocomplete
+              #autoTeam="matAutocomplete"
+              (optionSelected)="selectedTeam($event)"
+            >
+              <mat-option
+                *ngFor="let team of filteredTeams | async"
+                [value]="team"
+              >
+                {{ team.description }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="skills"> Skills</label>
+          <mat-form-field class="example-chip-list">
+            <mat-chip-list #chipListSkill aria-label="Skill selection">
+              <mat-chip
+                *ngFor="let skill of skills"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="removeSkill(skill)"
+              >
+                {{ skill }}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input
+                #skillInput
+                [formControl]="skillCtrl"
+                [matAutocomplete]="autoSkill"
+                [matChipInputFor]="chipListSkill"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="addSkill($event)"
+              />
+            </mat-chip-list>
+            <mat-autocomplete
+              #autoSkill="matAutocomplete"
+              (optionSelected)="selectedSkill($event)"
+            >
+              <mat-option
+                *ngFor="let skill of filteredSkills | async"
+                [value]="skill"
+              >
+                {{ skill }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="form-group">
+          <label for="categories"> Categories</label>
+          <mat-form-field class="example-chip-list">
+            <mat-chip-list #chipListCategory aria-label="Category selection">
+              <mat-chip
+                *ngFor="let category of categories"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="removeCategory(category)"
+              >
+                {{ category }}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input
+                #categoryInput
+                [formControl]="categoryCtrl"
+                [matAutocomplete]="autoCategory"
+                [matChipInputFor]="chipListCategory"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="addCategory($event)"
+              />
+            </mat-chip-list>
+            <mat-autocomplete
+              #autoCategory="matAutocomplete"
+              (optionSelected)="selectedCategory($event)"
+            >
+              <mat-option
+                *ngFor="let category of filteredCategories | async"
+                [value]="category"
+              >
+                {{ category }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="benefits"> Benefits</label>
+          <textarea
+            rows="5"
+            style="height: 120px"
+            type=""
+            class="form-control"
+            formControlName="benefits"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="form-group">
+          <label for="challenges"> Challenges</label>
+          <textarea
+            rows="5"
+            style="height: 120px"
+            type="text"
+            class="form-control"
+            formControlName="challenges"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="videoUrl"> Video Url</label>
+          <input type="text" class="form-control" formControlName="videoUrl" />
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <div class="upload-btn-wrapper">
+                <label>Idea Image</label>
+                <button class="upload-btn">Select Idea Image</button>
+                <input
+                  type="file"
+                  (change)="fileOnSelect($event)"
+                  accept=".png, .jpg"
+                  class="form-control"
+                  style="width: 150px; margin-top: 30px; cursor: pointer;"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="image-preview mb-3" *ngIf="ideaImage" style="margin-top: 22px;">
+              <img [src]="ideaImage" height="40" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="coverImage"> Add Attachments</label>
+          <!-- <input
+            #attachments
+            type="file"
+            (change)="attachmentOnSelect($event)"
+            multiple="multiple"
+            accept=".xlsx, .pdf, .csv, .doc"
+            class="form-control"
+          /> -->
+          <ngx-file-drop
+            dropZoneLabel="Drop files here"
+            (onFileDrop)="dropped($event)"
+            (onFileOver)="fileOver($event)"
+            (onFileLeave)="fileLeave($event)"
+          >
+            <ng-template
+              ngx-file-drop-content-tmp
+              let-openFileSelector="openFileSelector"
+            >
+              <button
+                type="button"
+                class="upload-btn"
+                (click)="openFileSelector()"
+              >
+                Browse Files
+              </button>
+            </ng-template>
+          </ngx-file-drop>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let selected of listOfFiles; let index = index">
+      <div class="col-10">
+        <div>
+          <p style="margin-bottom: 5px">
+            {{ selected.attachmentName }}
+          </p>
+          <p style="margin-bottom: 5px" *ngIf="!selected.attachmentName">
+            {{ selected }}
+          </p>
+        </div>
+      </div>
+      <div class="col-1">
+        <span *ngIf="selected.attachmentSrc" class="attachment-icon">
+          <a href="{{ selected.attachmentSrc }}">
+            <i class="fad fa-file-download"></i>
+          </a>
+        </span>
+      </div>
+      <div class="col-1">
+        <span
+          (click)="removeSelectedFile(index, selected.id)"
+          class="cross-icon"
+        >
+          <i class="far fa-times"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="budget"> Budget (&#36;)</label>
+          <input type="text" class="form-control" formControlName="budget" />
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="form-group">
+          <label for="efforts"> Efforts (Time)</label>
+          <input
+            formControlName="efforts"
+            id="efforts"
+            type="text"
+            class="form-control"
+            pattern="^[0-9]*$"
+          />
+          <div
+            *ngIf="
+              (submitted && f.efforts.errors) ||
+              (form.get('efforts').touched &&
+                form.get('efforts').invalid)
+            "
+          >
+            <div class="err" *ngIf="f.efforts.errors.pattern">
+              Please enter numeric value only.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button
+        *ngIf="!idea_id"
+        class="btn btn-primary mr-2"
+      >
+      <span
+      *ngIf="ShowLoader"
+      class="spinner-grow spinner-grow-sm"
+      aria-hidden="true"
+    ></span>
+    <span *ngIf="!ShowLoader">Submit</span>
+    <span *ngIf="ShowLoader">Loading...</span>
+
+      </button>
+
+      <button
+        *ngIf="idea_id"
+        class="btn btn-primary mr-2"
+
+      >
+      <span
+      *ngIf="ShowLoader"
+      class="spinner-grow spinner-grow-sm"
+      aria-hidden="true"
+    ></span>
+    <span *ngIf="!ShowLoader">Update</span>
+    <span *ngIf="ShowLoader">Loading...</span>
+
+      </button>
+    </div>
+  </form>
+</div>

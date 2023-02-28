@@ -1,0 +1,102 @@
+.comment-post-box{
+  padding: 16px 16px 0;
+}
+.comment-post-box .box-panel{
+  position: relative;
+  width: 375px;
+  padding-right: 0px;
+  margin-bottom: 8px;
+}
+.comment-post-box .box-panel::before{
+  content: '';
+  border-left: 2px solid #f4f4f4;
+  height: 100%;
+  position: absolute;
+  left: 16px;
+  top: 0;
+}
+.comment-post-box .box-panel img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.comment-post-box .text{
+  padding-left: 65px;
+}
+
+.comment-post-box .text ul{
+  list-style: none;
+  padding: 8px 0px;
+  margin: 0;
+  font-size: 14px;
+}
+.comment-post-box .text ul li{
+  display: inline-block;
+  margin-right: 5px;
+  color: black;
+}
+.comment-post-box .text ul li i{    color: #ffffff;
+  margin-left: 5px;
+  font-size: 10px;
+  background: #1782c2;
+  border-radius: 50px;
+  padding: 2px;}
+.comment-post-box .text ul li.link{
+  color: #1782c2;
+  margin-right: 0px;
+  cursor: pointer;
+}
+.comment-post-box .text ul li.link span{
+  font-size: 12px;
+  color: #b2b2b2;
+  margin-left: 5px;
+  cursor: auto;
+}
+.comment-post-box .text p{
+  margin: 0;
+  font-size: 12px;
+  color: #737373;
+}
+.comment-post-box .box-panel.reply-box{
+  width: 100%;
+}
+.comment-post-box .box-panel.reply-box .reply-text{
+  padding-left: 65px;
+  margin-top: 10px;
+}
+.comment-post-box .box-panel.reply-box::before{
+  display: none;
+}
+.comment-post-box .box-panel.reply-box .reply-text textarea{
+  width: 75%;
+  border: none;
+  color: #5b5b5b;
+  font-size: 12px;
+  height: 65px;
+  margin-top: 10px;
+}
+.comment-post-box .box-panel.reply-box .reply-text textarea:focus-visible{
+  border: none;
+  outline: none;
+}
+.comment-post-box .box-panel.reply-box .reply-text textarea::placeholder {
+  color: #b2b2b2;
+  font-size: 16px;
+}
+.save-reply-post{
+  text-align: right;
+  padding: 16px 16px;
+  border-top: 1px solid #e5e5e5;
+}
+.save-reply-post button{
+  border: none;
+  background-color: #1782c2;
+  color: white;
+  border-radius: 2px;
+  font-size: 12px;
+  padding: 2px 10px;
+}
+

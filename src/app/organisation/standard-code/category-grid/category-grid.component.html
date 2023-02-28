@@ -1,0 +1,63 @@
+<div id="divcontent">
+  <div class="pr-2">
+    <div data-layout="separate" class="grid-views">
+      <div class="grid-views__header">
+        <div class="left">
+          <h2 id="grid-title-frontend-customer-customer-user-grid289" class="grid-views__title" data-toggle="dropdown"
+            data-popper="false" aria-haspopup="true" aria-expanded="false">
+            Categories</h2>
+        </div>
+        <div class="add">
+          <a class="btn btn-warning" (click)="ShowCategoryForm(CategoryForm)">Create new Category</a>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <dx-data-grid id="gridContainer" [dataSource]="categorylist" [showBorders]="true"
+      (onRowRemoving)="onDeleting($event)" (onEditingStart)="onEdit($event,CategoryForm)">
+      <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-search-panel [visible]="true"></dxo-search-panel>
+      <dxo-editing [allowDeleting]="true" [allowUpdating]="true" [useIcons]="true">
+        <dxo-form>
+            <dxi-item dataField="code"></dxi-item>
+            <dxi-item dataField="description"></dxi-item>
+        </dxo-form>
+      </dxo-editing>
+      <dxo-selection mode="single"></dxo-selection>
+      <dxo-pager [showInfo]="true"> </dxo-pager>
+      <dxo-paging [pageSize]="10"></dxo-paging>
+      <dxo-pager [showInfo]="true"> </dxo-pager>
+      <dxi-column dataField="code"></dxi-column>
+      <dxi-column dataField="description"></dxi-column>
+    </dx-data-grid>
+  </div>
+
+  <ng-template #CategoryForm let-modal>
+    <span class="PopupClose" (click)="modal.dismiss('Cross click')"><img src="./../../assets/close-tab.png" /></span>
+    <div class="modal-body" style="margin-top: 20px;">
+      <form [formGroup]="categoryCreateForm" id="form" (ngSubmit)="categoryCreateForm.valid && onSubmit()">
+        <div class="form-box">
+          <div>
+            <label class="new-label fl_lt" for="code" id="code">Code
+              <span style="color: rgb(238, 28, 28); font-weight: 800" class="form-required">*</span>
+            </label>
+            <input type="text" class="form-control input-lg" id="code" name="code" formControlName="code" />
+          </div>
+          <div>
+            <label class="new-label fl_lt" for="description" id="description">Description
+              <span style="color: rgb(238, 28, 28); font-weight: 800" class="form-required">*</span>
+            </label>
+            <input type="text" class="form-control input-lg" id="description" name="description"
+              formControlName="description" />
+          </div>
+        </div>
+        <div *ngIf="this.CategoryId =='' " class="addnew">
+          <a class="btn2 " (click)="onSubmit()">Save</a>
+        </div>
+        <div *ngIf="this.CategoryId!='' " (click)="onSaving()" class="addnew">
+          <a class="btn2 ">Save</a>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>

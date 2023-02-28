@@ -1,0 +1,31 @@
+.copyright__bottom {
+  border-top: 1px solid #eee;
+}
+
+.copyright__bottom_text {
+  text-align: center;
+  padding: 20px 0 5px;
+  color: #9d9c9c;
+  font-size: 10px;
+  line-height: 20px;
+}
+
+.copyright__bottom .menu {
+  list-style: none;
+}
+
+ol,
+ul {
+  margin-top: 0;
+  padding: 0;
+  margin-bottom: 11.5px;
+  line-height: 1.75;
+  list-style: none;
+}
+
+.copyright__bottom .menu > li {
+  display: inline-block;
+  padding: 0 3px 0 5px;
+  border-left: 1px solid #9d9c9c;
+  line-height: 9px;
+}

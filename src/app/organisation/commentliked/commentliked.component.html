@@ -1,0 +1,12 @@
+<div class="scroll">
+    <mat-card-content id="commentlikes" *ngFor="let commentlike of CommentLikeUserList">
+      <div *ngIf=commentlike.userImage>
+      <img mat-card-avatar [src]="commentlike.userImage" class="example-header-image">
+    </div>
+    <div *ngIf=!commentlike.userImage>
+      <img mat-card-avatar src="./../../assets/admin.png" class="example-header-image">
+    </div>
+      <div id="username">{{commentlike.sourceUser}}</div>
+      <div id="useremail">{{commentlike.emailId}}</div>
+    </mat-card-content>
+</div>  

@@ -1,0 +1,241 @@
+.clear{clear: both;}
+::ng-deep .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+    border-left: 1px solid #ddd;
+    font-weight: 500;
+}
+.form-box{
+    padding: 0 16px 16px;
+}
+
+
+.left-side, .right-side{
+    display: inline;
+}
+.content {
+    display: flex;
+    justify-content: center;
+}
+.left-col{
+    margin: 0;
+    padding: 25px 30px;
+    background: #f5f5f5;
+    border-radius: 3px;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    flex: none;
+}
+.col-main{
+    width: 600px !important;
+}
+.input-lg
+{
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    font: normal 12px 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1px 8px;
+    position: static;
+    height: 24px;
+}
+.menu-title {
+    position: relative;
+    margin: 0 0 9px;
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+.header-text{
+    font-size: 12px;
+    margin: -3px 0 12px;
+}
+
+.primary-menu--vertical {
+    display: block;
+}
+
+.primary-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.li-menu-item {
+    position: relative;
+    flex: 0 1 auto;
+    padding: 5px 0 0 18px;
+}
+
+.li-menu-link {
+    color: #464646;
+    font-size: 14px;
+}
+.grid-views {
+    position: relative;
+    margin: 0;
+    border-bottom: 1px solid #ebebeb;
+}
+.grid-views__header {
+    width: 100%;
+}
+.grid-views__title {
+    vertical-align: middle;
+    font-size: 16px;
+    text-transform: capitalize;
+    margin-bottom: 0;
+}
+
+::ng-deep .dx-datagrid-headers {
+    color: #464646 !important;
+    font-weight: 400 !important;
+    touch-action: pinch-zoom;
+    background: #f5f5f5 !important;
+    border-bottom: 0px !important;
+}
+::ng-deep .dx-datagrid-borders > .dx-datagrid-pager {
+    border-top: 0px;
+}
+::ng-deep .dx-datagrid-rowsview .dx-row {
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid #f5f5f5;
+}
+::ng-deep .dx-datagrid .dx-column-lines > td {
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#divcontent
+{
+    padding: 35px 0 0 35px;
+}
+
+.right{
+float:right;
+}
+
+.left{
+    float:left;
+    }
+
+.add{
+float:right;
+
+}
+
+
+.btn{
+    width: auto;
+    padding: 2px 10px;
+    font-size: 12px;
+    border: 0px;
+    background: #4182c3;
+    color: #ffffff !important;
+    border-radius: 3px;
+    outline: none;
+  }
+  .btn2{
+    width: auto;
+    padding: 4px 10px;
+    font-size: 12px;
+    border: 0px;
+    background: #4182c3;
+    color: #ffffff !important;
+    border-radius: 3px;
+    outline: none;
+
+  }
+  .modal-content {
+    background-color: #fefefe;
+    color: black;
+    box-shadow: 0px 9px 28px 8px rgb(0 0 0 / 5%), 0px 6px 16px rgb(0 0 0 / 8%), 0px 3px 6px -4px rgb(0 0 0 / 12%); 
+    border-radius: 2px;
+    width: 400px;
+    border: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .modal {
+    display: inline-block;
+    position: fixed;
+    z-index: 1111;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    overflow: hidden;
+    border: none;
+    background: #607d8b59;
+  }
+  #header
+  {
+    margin-top:-10px;
+    /* margin-left:10px; */
+    /* margin-right:10px; */
+    padding-bottom: 10px;
+    border-bottom: 1px solid lightgray;
+    left:0;
+    color: #262626;
+    font-weight: 500;
+  }
+  #heading
+  {
+    color: #262626;
+    background: inherit;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    font-style: normal;
+    font-family: Text Bold !important;
+    border-bottom: 1px solid #ebebeb;
+    padding: 16px;
+  }
+   
+   
+  #middlecontent
+  {
+    border-bottom: 1px solid lightgray;
+    color: gray;
+    padding-bottom: 5px;
+  }
+   
+  #mail
+  {
+    border-bottom: 1px solid lightgray;
+    color: rgb(100, 97, 97);
+    padding-bottom:7px;
+  }
+   
+  #footer
+  {
+    color: rgb(100, 97, 97);
+    padding-bottom: 4px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+   
+  #footer:hover
+  {
+    cursor: pointer;
+  }
+  .close{
+    border: none;
+    cursor: pointer;
+    margin-bottom: -39px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 16px;
+}
+
+.addnew{
+    font-size: 15px;
+    color: #FFFFFF;
+    display: block;
+    border-top: 1px solid #ebebeb;
+    text-align: right;
+    padding: 16px 16px 20px;
+}

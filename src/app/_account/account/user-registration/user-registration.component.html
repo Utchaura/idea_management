@@ -1,0 +1,362 @@
+<ng-container *ngIf="userRegisterForm">
+  <div class="form-title">Sign Up</div>
+  <form
+    [formGroup]="userRegisterForm"
+    id="form"
+    (ngSubmit)="userRegisterForm.valid && onSubmit()"
+  >
+    <!-- <h4 id="heading">Register new user to {{ hostName }}</h4> -->
+
+    <div class="row">
+      <div class="col-sm-6 form-group">
+        <!-- <label for="firstname" id="firstname"
+          >First Name<span
+            style="color: rgb(238, 28, 28); font-weight: 800"
+            class="form-required"
+            >*</span
+          ></label
+        > -->
+        <input
+          type="text"
+          class="form-control input-lg"
+          id="firstname"
+          name="firstname"
+          formControlName="firstname"
+          placeholder="First Name"
+          [ngClass]="{
+            'is-invalid':
+              userRegisterForm.get('firstname').touched &&
+              userRegisterForm.get('firstname').invalid
+          }"
+        />
+        <div
+          *ngIf="
+            userRegisterForm.get('firstname').touched &&
+            userRegisterForm.get('firstname').invalid
+          "
+          class="invalid-feedback"
+        >
+          <div
+            style="color: rgb(238, 28, 28); font-size: 15px"
+            id="firstname"
+            *ngIf="userRegisterForm.get('firstname').errors?.required"
+          >
+            First Name is required
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 form-group">
+        <!-- <label for="lastname" id="lastname"
+          >Last Name<span
+            style="color: rgb(238, 28, 28); font-weight: 800"
+            class="form-required"
+            >*</span
+          ></label
+        > -->
+        <input
+          type="text"
+          class="form-control input-lg"
+          id="lastname"
+          name="lastname"
+          formControlName="lastname"
+          placeholder="Last Name"
+          [ngClass]="{
+            'is-invalid':
+              userRegisterForm.get('lastname').touched &&
+              userRegisterForm.get('lastname').invalid
+          }"
+        />
+        <div
+          *ngIf="
+            userRegisterForm.get('lastname').touched &&
+            userRegisterForm.get('lastname').invalid
+          "
+          class="invalid-feedback"
+        >
+          <div
+            style="color: rgb(238, 28, 28); font-size: 15px"
+            id="lastname"
+            *ngIf="userRegisterForm.get('lastname').errors?.required"
+          >
+            Last Name is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 form-group">
+        <!-- <label for="email" id="email"
+          >Email<span
+            style="color: rgb(238, 28, 28); font-weight: 800"
+            class="form-required"
+            >*</span
+          ></label
+        > -->
+        <input
+          type="text"
+          class="form-control input-lg"
+          id="email"
+          name="email"
+          formControlName="email"
+          placeholder="Email"
+          [ngClass]="{
+            'is-invalid':
+              userRegisterForm.get('email').touched &&
+              userRegisterForm.get('email').invalid
+          }"
+        />
+
+        <div
+          *ngIf="
+            userRegisterForm.get('email').touched &&
+            userRegisterForm.get('email').invalid
+          "
+          class="invalid-feedback"
+        >
+          <div
+            style="color: rgb(238, 28, 28); font-size: 15px"
+            id="email"
+            *ngIf="userRegisterForm.get('email').errors?.required"
+          >
+            Email Name is required
+          </div>
+
+          <div
+            style="color: rgb(238, 28, 28); font-size: 15px"
+            id="email"
+            *ngIf="userRegisterForm.get('email').errors?.email"
+          >
+            Email must be a valid email Address
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-sm-6 form-group"> -->
+      <!-- <label for="mobile" id="mobile">Mobile Number</label> -->
+      <!-- <input
+          class="form-control input-lg"
+          resize="vertical"
+          id="mobile"
+          name="mobile"
+          formControlName="mobile"
+          placeholder="Mobile Number"
+          [ngClass]="{
+            'is-invalid':
+              userRegisterForm.get('mobile').touched &&
+              userRegisterForm.get('mobile').invalid
+          }"
+          required="true"
+
+        /> -->
+      <!-- <div
+        *ngIf="
+          userRegisterForm.get('mobile').touched &&
+          userRegisterForm.get('mobile').invalid
+        "
+        class="invalid-feedback"
+      >
+        <div
+          style="color: rgb(238, 28, 28); font-size: 15px"
+          id="mobile"
+          *ngIf="userRegisterForm.get('mobile').errors?.required"
+        >
+          Mobile no. is required
+        </div>
+        <div
+        style="color: rgb(238, 28, 28)"
+        class="new-label fl_lt"
+        id="mobile"
+        *ngIf="userRegisterForm.get('mobile').errors?.pattern"
+      >
+        Please provide a valid Mobile Number
+      </div>
+      </div> -->
+      <!-- </div> -->
+
+      <div class="col-sm-6 form-group">
+        <!-- <label for="password" id="password"
+          >Password<span
+            style="color: rgb(238, 28, 28); font-weight: 800"
+            class="form-required"
+            >*</span
+          ></label
+        > -->
+        <input
+          type="password"
+          class="form-control input-lg"
+          id="password"
+          name="password"
+          formControlName="password"
+          placeholder="Password"
+          [ngClass]="{
+            'is-invalid':
+              userRegisterForm.get('password').touched &&
+              userRegisterForm.get('password').invalid
+          }"
+          required="true"
+        />
+        <div
+          *ngIf="
+            userRegisterForm.get('password').touched &&
+            userRegisterForm.get('password').invalid
+          "
+          class="invalid-feedback"
+        >
+          <div
+            style="color: rgb(238, 28, 28); font-size: 15px"
+            id="password"
+            *ngIf="userRegisterForm.get('password').errors?.required"
+          >
+            Password is required
+          </div>
+
+          <div
+            style="color: rgb(238, 28, 28); font-size: 15px"
+            id="password"
+            *ngIf="userRegisterForm.get('password').errors?.pattern"
+          >
+            Password must have a capital case,small case letter,special
+            character and minimum length allowed is of 5 characters.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 form-group">
+        <!-- <label for="confirmpswd" id="confirmpswd"
+          >Confirm Password<span
+            style="color: rgb(238, 28, 28); font-weight: 800"
+            class="form-required"
+            >*</span
+          ></label
+        > -->
+        <input
+          type="password"
+          class="form-control input-lg"
+          id="confirmpswd"
+          name="confirmpswd"
+          formControlName="confirmpswd"
+          placeholder="Confirm Password"
+          [ngClass]="{
+            'is-invalid':
+              userRegisterForm.get('confirmpswd').touched &&
+              userRegisterForm.get('confirmpswd').invalid
+          }"
+          appConfirmEqualValidator="password"
+        />
+        <div
+          *ngIf="
+            userRegisterForm.get('confirmpswd').touched &&
+            userRegisterForm.get('confirmpswd').invalid
+          "
+          class="invalid-feedback"
+        >
+          <div
+            style="color: rgb(238, 28, 28); font-size: 15px"
+            id="confirmpswd"
+            *ngIf="userRegisterForm.get('confirmpswd').errors.required"
+          >
+            Password is required
+          </div>
+          <div
+            style="color: rgb(238, 28, 28); font-size: 15px"
+            id="confirmpswd"
+            *ngIf="userRegisterForm.get('confirmpswd').errors.MustMatch"
+          >
+            Password and Confirm password must be same
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 height-control">
+        <div class="recaptcha">
+          <div class="form-group">
+            <ngx-recaptcha2
+              #captchaElem
+              [siteKey]="siteKey"
+              formControlName="recaptcha"
+              [ngClass]="{
+                'is-invalid':
+                  userRegisterForm.get('recaptcha').touched &&
+                  userRegisterForm.get('recaptcha').invalid
+              }"
+            >
+            </ngx-recaptcha2>
+            <div
+              *ngIf="
+                userRegisterForm.get('recaptcha').touched &&
+                userRegisterForm.get('recaptcha').invalid
+              "
+              class="invalid-feedback"
+            >
+              <div
+                style="color: rgb(238, 28, 28); font-size: 15px"
+                id="domain"
+                *ngIf="userRegisterForm.get('recaptcha').errors?.required"
+              >
+                Please Verify that you are not a Robot!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- <div class="col-sm-6">
+      <div class="uploade-image">
+            <label>Upload Profile pic</label>
+            <div class="form-group">
+              <input
+                type="file"
+                name="image"
+                (change)="fileOnSelect($event)"
+                accept=".png, .jpg"
+              />
+            </div>
+            <div class="image-preview mb-3" *ngIf="fileData">
+              <img [src]="fileData" height="30" width="30" />
+            </div>
+      </div>
+    </div> -->
+    </div>
+
+    <div id="terms">
+      <label class="form-group">
+        <input
+          type="checkbox"
+          class="largerCheckbox"
+          formControlName="privacycheck"
+          (change)="privacyCheck()"
+        />
+        &nbsp; I allow you to store and process my personal data according to
+        your Privacy Policies *.
+      </label>
+      <br /><br />
+    </div>
+    <div class="button-border">
+      <button
+        class="user-create-button"
+        type="submit"
+        [disabled]="!userRegisterForm.valid"
+      >
+        <span
+          *ngIf="showLoader"
+          class="spinner-grow spinner-grow-sm"
+          aria-hidden="true"
+        ></span>
+        <span *ngIf="!showLoader">Sign Up</span>
+        <span *ngIf="showLoader">Loading...</span>
+      </button>
+    </div>
+    <div class="register-button">
+      Already Register?
+      <span routerLink="/account/login" routerLinkActive="router-link-active"
+        >Login</span
+      >
+    </div>
+  </form>
+</ng-container>

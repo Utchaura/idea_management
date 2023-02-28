@@ -1,0 +1,34 @@
+export class Idea {
+  Id: string;
+  Title: string;
+  Statement: string;
+  Description: string;
+  Attachment: string;
+  Tags: string;
+  Benefits: string;
+  Challenges: string;
+  VideoUrl: string;
+  CoverImage: string;
+  Skills: string;
+  Categories: string;
+  Teams: string;
+  TeamTags: string;
+  Efforts: string;
+  Code: string;
+  Budget: string;
+  OrganisationDomain: string;
+  OrgId: string;
+  IdeaCoverImgId: string;
+  Status: number;
+  UserName: string;
+  UserImageUrl: string;
+  EmailId: string;
+  TotalLike: number;
+  TotalUnlike: number;
+  TotalComment: number;
+  Users: string;
+  UsersExcept: string;
+  Approvers: string;
+  Privacy: string;
+  Created_by: string;
+}

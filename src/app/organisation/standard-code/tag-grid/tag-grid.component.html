@@ -1,0 +1,109 @@
+<div id="divcontent">
+  <div class="pr-2">
+    <div data-layout="separate" class="grid-views">
+      <div class="grid-views__header">
+        <div class="left">
+        <h2
+          id="grid-title-frontend-customer-customer-user-grid289"
+          class="grid-views__title"
+          data-toggle="dropdown"
+          data-popper="false"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+         Tags</h2>
+         </div>
+
+
+
+        <div class="add">
+          <a class="btn btn-warning"(click)="tag()" >Create new Tag</a>
+         </div>
+         <div class="clear"></div>
+      </div>
+    </div>
+    <br />
+    <dx-data-grid
+      id="gridContainer"
+      [dataSource]="tagList"
+      [showBorders]="true"
+      (onSaving)="onSaving($event)"
+    >
+    <dxo-paging [pageSize]="10"></dxo-paging>
+      <dxo-editing mode="popup"
+
+      [allowUpdating]="true"
+      [useIcons]="true"
+      >
+      <dxo-popup
+      title="Edit Tag "
+      [showTitle]="true"
+      [width]="500"
+      [height]="300">
+  </dxo-popup>
+  <dxo-form>
+    <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+      <dxi-item dataField="code"></dxi-item>
+      <dxi-item dataField="description"></dxi-item>
+    </dxi-item>
+    </dxo-form>
+    </dxo-editing>
+    <dxo-selection mode="single"></dxo-selection>
+
+    <dxo-pager [showInfo]="true"> </dxo-pager>
+      <dxo-paging [pageSize]="10"></dxo-paging>
+      <dxo-pager [showInfo]="true"> </dxo-pager>
+
+      <dxi-column dataField="code"></dxi-column>
+      <dxi-column dataField="description"></dxi-column>
+
+    </dx-data-grid>
+  </div>
+  <div *ngIf="newTag" id="myModal" class="modal" >
+    <div class="modal-content">
+      <a class="close"  (click)="close()">
+        <span>&times;</span>
+      </a>
+      <label id="heading">Add New Tag</label>
+      <ng-container *ngIf="tagCreateForm">
+          <form [formGroup]="tagCreateForm" id="form" (ngSubmit)="tagCreateForm.valid && onSubmit()">
+            <div class="form-box">
+
+              <div>
+                <label class="new-label fl_lt" for="code" id="code">Code
+                  <span style="color: rgb(238, 28, 28); font-weight: 800" class="form-required">*</span>
+                </label>
+                <input
+                type="text"
+                class="form-control input-lg"
+                id="code"
+                name="code"
+                formControlName="code"
+
+                />
+
+              </div>
+              <div>
+                <label class="new-label fl_lt" for="lastname" id="lastname">Description
+                  <span style="color: rgb(238, 28, 28); font-weight: 800" class="form-required">*</span>
+                </label>
+                <input
+                type="text"
+                class="form-control input-lg"
+                id="description"
+                name="description"
+                formControlName="description"
+
+                />
+
+            </div>
+              </div>
+          <div class="addnew">
+            <a class="btn2 " (click)="onSubmit()" >Create new Tag</a>
+           </div>
+          </form>
+          </ng-container>
+  </div>
+
+  </div>
+  </div>

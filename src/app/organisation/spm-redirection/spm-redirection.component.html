@@ -1,0 +1,20 @@
+<form
+  ngNoForm
+  id="spmLogin"
+  action="{{ spmLoginLink }}"
+  method="post"
+  name="SPMLogin"
+  target="blank"
+>
+  <input id="u" name="u" type="hidden" value="{{ spmToken.ClientId }}" />
+  <input id="p" name="p" type="hidden" value="{{ spmToken.ClientSecret }}" />
+  <input id="m" name="m" type="hidden" value="IdeaHub" />
+  <input
+    id="projectId"
+    name="projectId"
+    type="hidden"
+    value="{{ ProjectId }}"
+  />
+  <input id="type" name="type" type="hidden" value="{{ Type }}" />
+  <input type="submit" value="Sumit" class="btn1" style="display: none" />
+</form>

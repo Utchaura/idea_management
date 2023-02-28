@@ -1,0 +1,87 @@
+<div class="container">
+
+    <div class="row">
+      <div class="FormLabel">
+        <span for="usertags" id="usertags" style="margin-left: 0px;">Add Approvers</span>
+      </div>
+      <div class="FormInput" style="display: inline-block;width: 100%;">
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipList aria-label="User selection">
+            <mat-chip
+              *ngFor="let user of users"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="removeUser(user)"
+            >
+            <mat-chip-avatar *ngIf="user.image"><img class="chip-image" src={{user.image}}/>
+            </mat-chip-avatar>
+            <mat-chip-avatar *ngIf="!user.image"><img class="chip-image" src="./../../../../../assets/admin.png"/>
+            </mat-chip-avatar>
+              {{ user.name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              #userInput
+              [formControl]="userCtrl"
+              [matAutocomplete]="autoUser"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addUser($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #autoUser="matAutocomplete"
+            (optionSelected)="selectedUser($event)"
+          >
+          <ng-container  *ngFor="let user of filteredUsers | async">
+            <mat-option class="optionDropdown"
+            *ngIf="!users.includes(user)"
+              [value]="user"
+            >
+            <div class="row">
+              <div class="col-1">
+            <mat-chip-avatar class="avtar"><img class="chips-image" src={{user.image}}/>
+            </mat-chip-avatar>
+            <mat-chip-avatar *ngIf="!user.image"><img class="chips-image" src="./../../../../../assets/admin.png"/>
+            </mat-chip-avatar>
+          </div>
+          <div class="col-10">
+             <span class="chip-name"> {{ user.name }}</span>
+            </div>
+            </div>
+            </mat-option>
+          </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+
+      <!-- <mat-card-content id="user" *ngFor="let user of userList">
+          <div class="row" style="margin-top:14px;">
+              <div class="col-1" *ngIf="user.userImage != null">
+             <img mat-card-avatar [src]="user.userImage.imageSrc" class="example-header-image">
+          </div>
+          <div class="col-1" *ngIf="user.userImage == null">
+            <img mat-card-avatar src="./../../../../../assets/admin.png" class="example-header-image">
+         </div>
+   <div class="col-10" style="margin-left:10px;">
+          <div id="username">{{user.firstName}}&nbsp;{{user.lastName}}</div>
+          <div id="useremail">{{user.emailId}}</div>
+      </div>
+      </div>
+        </mat-card-content> -->
+
+        <div class="save-idea" style="position: absolute;
+        bottom: 0px;
+        right: 0;
+        padding: 0 20px;">
+          <div class="save-idea-btn">
+            <button
+              class="btn" (click)="Save()"
+            >
+            <span>Save</span>
+            </button>
+          </div>
+        </div>
+
+      </div>

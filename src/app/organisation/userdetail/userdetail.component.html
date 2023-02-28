@@ -1,0 +1,376 @@
+<div class="wrapper">
+  <!-- remove inline css & add class -->
+  <div class="main-section-class" style="position: relative">
+    <div class="left">
+      <div class="Idea-type" style="padding-left: 0">
+        <!-- add class by Nandla -->
+        <div class="left-nav-menu">
+          <h2>Status</h2>
+          <ul>
+            <li
+              class="idea-type-list"
+              routerLink="/organisation/idea-main/fresh-idea"
+              (click)="changeIdeaStatus('Fresh Ideas')"
+              routerLinkActive="router-link"
+            >
+            <i class="far fa-lightbulb"></i>&nbsp;&nbsp; Fresh Ideas <span style="color:black;float:right; ">
+              {{this.status.status.publish}}
+             </span>
+            </li>
+            <li
+              class="idea-type-list"
+              routerLink="/organisation/idea-main/under-evaluation-idea"
+              (click)="changeIdeaStatus('Under Evaluation Ideas')"
+              routerLinkActive="router-link"
+            >
+            <i class="far fa-minus-square"></i>&nbsp; Under Evaluation Ideas<span style="color:black;float:right; ">
+              {{this.status.status.open}}
+             </span>
+            <li
+              class="idea-type-list"
+              routerLink="/organisation/idea-main/approved-idea"
+              (click)="changeIdeaStatus('Approved Ideas')"
+              routerLinkActive="router-link"
+            >
+            <i class="fas fa-clipboard-list"></i>&nbsp;&nbsp; Approved Ideas <span style="color:black;float:right; ">
+              {{this.status.status.approved}}
+             </span>
+            </li>
+            <li
+              class="idea-type-list"
+              routerLink="/organisation/idea-main/recent-idea"
+              (click)="changeIdeaStatus('Idea Backlog ')"
+              routerLinkActive="router-link"
+            >
+              <i class="far fa-bookmark"></i>&nbsp;&nbsp; Idea Backlog <span style="color:black;float:right; ">
+                {{this.status.status.backlog}}
+               </span>
+            </li>
+            <li
+              class="idea-type-list"
+              routerLink="/organisation/idea-main/under-approval-idea"
+              (click)="changeIdeaStatus('Under Approval Ideas')"
+              routerLinkActive="router-link"
+            >
+            <i class="far fa-bell"></i>&nbsp;&nbsp; Under Approval Ideas<span style="color:black;float:right; ">
+              {{this.status.status.underApproval}}
+             </span>
+              <!-- <span
+                style="color: black; float: right"
+              >
+                {{ underApproval }}
+              </span> -->
+            </li>
+            <li
+              class="idea-type-list"
+              routerLinkActive="router-link"
+              routerLink="/organisation/idea-main/my-reviewed-idea"
+              (click)="changeIdeaStatus('Draft Ideas')"
+            >
+            <i class="far fa-user"></i>&nbsp;&nbsp; Draft Ideas <span style="color:black;float:right; ">
+              {{this.status.status.draft}}
+             </span>
+              <!-- <span style="color: black; float: right">
+                {{ draft }}
+              </span> -->
+            </li>
+            <li
+            *ngIf="this.needMyInput"
+              class="idea-type-list"
+              routerLinkActive="router-link"
+              routerLink="/organisation/idea-main/my-input-idea"
+              (click)="changeIdeaStatus('Ideas Need Input')"
+            >
+              <i class="fas fa-circle-notch"></i>&nbsp;&nbsp; Ideas Need Input
+              <span style="color:black;float:right; ">
+                {{this.status.status.approver}}
+               </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="middle">
+      <div class="middle-section">
+        <div class="top-middle">
+          <mat-card class="example-card">
+            <div class="name">
+              {{ this.userName }}
+            </div>
+            <div class="posts" *ngIf="this.totalposts > 0">{{this.totalposts}} Posts</div>
+            <!-- To Upload Cover Image By Ayush Kumar -->
+           
+            <!-- <div  *ngIf="coverPic">           
+              <img [src]="coverPic" class="background-image" />
+            </div> 
+
+            <div *ngIf="!coverPic">
+              <img  class="background-image" />
+            </div>           -->
+            <div  *ngIf="coverPic">
+              <img [src]="this.coverPic" class="background-image" />
+              <button *ngIf="loggedUserId == userId" type="button" class="coverPicture" (click)="CoverImagePopup(CoverImage)">Upload Cover Picture</button>
+            </div> 
+ 
+            <div *ngIf="!coverPic">
+              <img  class="background-image" />
+              <button *ngIf="loggedUserId == userId" type="button" class="coverPicture" (click)="CoverImagePopup(CoverImage)">Upload Cover Picture</button>
+            </div> 
+
+            <ng-template class="modal-content"#CoverImage let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title">Upload Cover Image</h4>
+                <button
+                  type="button"
+                  class="close"
+                  aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <app-cover-image-popup></app-cover-image-popup>
+              </div>
+            </ng-template>
+
+            
+            <div *ngIf="this.userProfileImage">
+            <img [src]="this.userProfileImage" class="img-profile" />
+          </div>
+          <div *ngIf="!userProfileImage">
+            <img  src="./../../assets/admin.png" class="img-profile" />
+          </div>
+
+            <div class="username">
+              {{ this.userName }}
+            </div>
+            <div *ngIf="headline" class="headline">
+              {{ this.headline }}
+            </div>
+            <!-- <div class="designation">
+              {{ this.designation }}
+            </div> -->
+            <div class="row" class="locinfo">
+            <div *ngIf="location" class="location">
+              {{ location }}
+            </div>
+              <div class="contactinfo" (click)=ShowContactDetails(ContactInfo)>
+                Contact Info
+              </div>      
+          </div>
+
+            <div class="row">
+              <div class="col-10">
+              <!-- <mat-card-actions class="actionButtons"> -->
+                <!-- <button class="btnn-card btn-sm mr-2" (click)="GetIdeaByUserEmailId()">&nbsp;Posts&nbsp;</button> -->
+                <!-- <button class="btn-card btn-sm mr-2">
+            &nbsp;Comments&nbsp;
+        </button> -->
+              <!-- </mat-card-actions> -->
+            </div>
+            <div class="col-2" *ngIf="loggedUserId == userId">
+              <div class="editpencil">
+                <i class="fa fa-pencil" aria-hidden="true" (click)="editDetail()"></i>
+              </div>
+              </div>
+
+            </div>
+          </mat-card>
+        </div>
+        <div style="height:7px;"></div>
+        <div *ngIf="ideapost">
+        <!-- <mat-card *ngFor="let idea of allIdeas">
+                <mat-card-header>
+                    <img
+                      mat-card-avatar
+                      [src]="idea.userImageUrl"
+                      class="example-header-image"
+                    />
+                    </mat-card-header>
+                    </mat-card> -->
+                    <app-idea-card [CurrentUserIdea]="userId"></app-idea-card>
+
+<!-- <mat-card class="example-card" *ngFor="let idea of allIdeas; index as i">
+  <mat-card-header>
+    <img *ngIf="idea.createdBy.userImage"
+      mat-card-avatar
+      [src]="idea.createdBy.userImage.imageSrc"
+      class="example-header-image"
+    />
+    <img *ngIf="!idea.createdBy.userImage"
+      mat-card-avatar
+      src="../../../assets/admin.png"
+      class="example-header-image"
+    />
+    <mat-card-title
+      >{{ idea.createdBy.firstName +" "+idea.createdBy.lastName   }}
+    </mat-card-title>
+    <mat-card-subtitle  style="margin-bottom:24px;" [innerHTML]="idea.statement"
+    ></mat-card-subtitle>
+  </mat-card-header>
+  <div id="innercontent"  *ngIf="idea.description">
+    <img
+      *ngIf="!idea.videoUrl && idea.ideaCoverImg"
+      mat-card-image
+      [src]="idea.ideaCoverImg.imageSrc"
+      (click)="onClick(idea)"
+      style="cursor: pointer"
+    />
+    <iframe
+      *ngIf="idea.videoUrl"
+      mat-card-image
+      [src]="safeUrl(idea.videoUrl)"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+    <div
+      *ngIf="idea.description"
+      id="descriptionContent"
+      align="justify"
+      [innerHTML]="idea.description"
+      (click)="onClick(idea)"
+    ></div>
+  </div>
+  <div id="innercontent" *ngIf="!idea.description">
+    <img
+      *ngIf="!idea.videoUrl && idea.ideaCoverImg"
+      mat-card-image
+      [src]="idea.ideaCoverImg.imageSrc"
+      (click)="onClick(idea)"
+      style="cursor: pointer;"
+    />
+    <iframe
+      *ngIf="idea.videoUrl"
+      mat-card-image
+      [src]="safeUrl(idea.videoUrl)"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+    <div
+      *ngIf="idea.description"
+      id="descriptionContent"
+      align="justify"
+      [innerHTML]="idea.description"
+      (click)="onClick(idea)"
+    ></div>
+  </div>
+
+</mat-card> -->
+
+        </div> 
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="Idea-type" style="padding-left: 0">
+        <ul class="right-idea-list">
+          <!-- class add by nandlal 9-6-2021 -->
+          <li class="right-side-idea">
+            <div class="card mb-3">
+              <!-- remove inline bg-color by nandlal 9-6-2021 -->
+              <div class="card-header">Top Votes Ideas</div>
+              <div class="scroll">
+                <app-top-voted-idea></app-top-voted-idea>
+              </div>
+            </div>
+          </li>
+
+          <li class="right-side-idea">
+            <div class="card mb-3">
+              <!-- remove inline bg-color by nandlal 9-6-2021 -->
+              <div class="card-header">Recently Changed</div>
+              <div class="scroll">
+                <app-recent-change-idea></app-recent-change-idea>
+              </div>
+            </div>
+          </li>
+          <li class="right-side-idea">
+            <div class="card mb-3">
+              <!-- remove inline bg-color by nandlal 9-6-2021 -->
+              <div class="card-header">Just Approved Ideas</div>
+              <div class="scroll">
+                <app-just-approved-idea></app-just-approved-idea>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+
+
+<ng-template #ContactInfo let-modal>
+  <div class="modal-header">
+    <div class="modal-title">
+      <h1>{{userName}}</h1>
+    </div>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="section">
+ <div class="verified">
+   <div class="row" id="firstrow">
+   <span class="verifyicon"><i class="fas fa-check-double"></i></span>
+   <span class="verify">Verified Account</span>
+  </div>
+   <p class="statement">The EmailId and Phone Number associated with this account has been verified.</p>
+   </div>
+  </div>
+  <div class="info">
+    <div class="row">
+      <div class="col-10">
+      <h1 class="contactheading">Contact Info</h1>
+      </div>
+      <div class="col-2" style="margin-top:6px;" *ngIf="loggedUserId == userId" >
+       <span class="edit-pencil"> <i class="fa fa-pencil" aria-hidden="true" (click)="editDetail()"></i></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+<div class="emailicon">
+  <i class="fa fa-envelope" aria-hidden="true"></i>
+</div>
+</div>
+<div class="col-10">
+<div class="emailid">
+ Email Id
+</div>
+<div class="email">
+{{emailId}}
+</div>
+</div>
+    </div>
+
+    <div class="row" style="margin-top:15px;">
+      <div class="col-2">
+<div class="mobileicon">
+  <i class="far fa-id-card"></i>
+</div>
+</div>
+<div class="col-10">
+<div class="mobileno">
+ Contact Number
+</div>
+<div class="mobile">
+{{mobileNo}}
+</div>
+</div>
+    </div>
+
+  </div>
+</ng-template>

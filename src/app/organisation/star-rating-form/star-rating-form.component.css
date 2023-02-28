@@ -1,0 +1,29 @@
+.rating-list li {
+    float: right;
+    color: #ddd;
+    padding: 10px 5px;
+  
+  }
+  
+  .rating-list li:hover,
+  .rating-list li:hover ~ li, .rating-list li.selected {
+    color: #ffd700;
+  }
+  
+  .rating-list {
+    display: inline-block;
+    list-style: none;
+  }
+  .save-rate-btn{
+    display: inline-block;
+  }
+  .save-rate{
+    /* background-color: #ffffff; */
+    display: inline-block;
+    width: 90%;
+    text-align: right;
+    padding: 10px 0 0;   
+    margin-top: 18px;
+    margin-bottom: 18px;
+  
+  }

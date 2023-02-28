@@ -1,0 +1,40 @@
+<!-- <p>cover-image-popup works!</p> -->
+<!-- Hello
+<div> Hi</div> -->
+<div class="col-4" *ngIf="userid">
+    <div class="wrapper"  style="margin-top: -8px; margin-left: 4px">
+      <div class="image-preview mb-3" *ngIf="cover">
+        <img [src]="cover" class="background-image" />
+      </div>
+      <div class="image-preview mb-3" *ngIf="!cover">
+        <img  class="background-image" /> 
+      </div>
+      <div class="upload-btn-wrapper">
+        <button class="uploadbtn btn">Upload Cover Picture</button>
+        <input
+          type="file"
+          name="coverImage"
+          (change)="coverImageSelect($event)"
+          accept=".png, .jpg"
+        />
+      </div>
+      <br/>
+      <div class="btn-div" >
+        <button
+          *ngIf="userid"
+          [disabled]="loading"
+          class="btn"
+          (click)="onSubmit()"
+        >
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span *ngIf="!loading">Save</span>
+          <br/>
+        </button>  
+      </div>
+    </div>
+  </div>

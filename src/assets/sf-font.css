@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'sf-pro-text-regular';
+    src: url('sf-pro-text-regular.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'SF Pro Text Bold';
+    src: url('FontsFree-Net-SFProText-Bold.ttf') format('truetype');
+}

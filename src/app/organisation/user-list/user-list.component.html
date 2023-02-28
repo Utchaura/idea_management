@@ -1,0 +1,57 @@
+
+<div class="wrapper">
+  <div id="divcontent">
+    <div class="pr-2">
+      <div data-layout="separate" class="grid-views">
+        <div class="grid-views__header">
+          <div class="left">
+          <h2
+            id="grid-title-frontend-customer-customer-user-grid289"
+            class="grid-views__title"
+            data-toggle="dropdown"
+            data-popper="false"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+          All Users</h2>
+          </div>
+
+
+          <div class="add">
+            <!-- <a class="btn" routerLink="/organisation/createUser/generalDetails"
+            routerLinkActive="router-link-active">Create new User</a> -->
+            <a style="color:white;" class="btn" (click)="CreateUser()"
+            routerLinkActive="router-link-active">Create new User</a>
+            </div>
+      <div class="clear"></div>
+
+        </div>
+      </div>
+
+      <dx-data-grid
+        id="gridContainer"
+        [dataSource]="userlist"
+        [showBorders]="true"
+        [selectedRowKeys]="[]"
+        [hoverStateEnabled]="true"
+        (onSaving)="onSaving($event)"
+        (onEditingStart)="onEdit($event)"
+      >
+        <dxo-search-panel [visible]="true"></dxo-search-panel>
+        <dxo-paging [pageSize]="10"></dxo-paging>
+        <dxo-editing
+        [allowDeleting]="true"
+        [allowUpdating]="true"
+        [useIcons]="true">
+      >
+
+        </dxo-editing>
+
+        <dxi-column dataField="firstName"></dxi-column>
+        <dxi-column dataField="lastName"></dxi-column>
+        <dxi-column dataField="emailId"></dxi-column>
+      </dx-data-grid>
+    </div>
+  </div>
+</div>
+

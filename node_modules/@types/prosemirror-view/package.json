@@ -1,0 +1,53 @@
+{
+    "name": "@types/prosemirror-view",
+    "version": "1.17.1",
+    "description": "TypeScript definitions for prosemirror-view",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Bradley Ayers",
+            "url": "https://github.com/bradleyayers",
+            "githubUsername": "bradleyayers"
+        },
+        {
+            "name": "David Hahn",
+            "url": "https://github.com/davidka",
+            "githubUsername": "davidka"
+        },
+        {
+            "name": "Tim Baumann",
+            "url": "https://github.com/timjb",
+            "githubUsername": "timjb"
+        },
+        {
+            "name": "Patrick Simmelbauer",
+            "url": "https://github.com/patsimm",
+            "githubUsername": "patsimm"
+        },
+        {
+            "name": "Ifiok Jr.",
+            "url": "https://github.com/ifiokjr",
+            "githubUsername": "ifiokjr"
+        },
+        {
+            "name": "Mike Morearty",
+            "url": "https://github.com/mmorearty",
+            "githubUsername": "mmorearty"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/prosemirror-view"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/prosemirror-model": "*",
+        "@types/prosemirror-state": "*",
+        "@types/prosemirror-transform": "*"
+    },
+    "typesPublisherContentHash": "5f6e8a9d2d5e63dd3543a6994d3173c81c7de0ac76761d8dceb70d0cdaf59c0c",
+    "typeScriptVersion": "3.4"
+}

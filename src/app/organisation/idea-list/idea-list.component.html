@@ -1,0 +1,138 @@
+
+
+  <!-- <div class="input-group rounded">
+    <input
+      class="form-control rounded"
+      placeholder="&#xF002; Search"
+      [(ngModel)]="filterKeyValue"
+      (ngModelChange)="Search()"
+      style="position: fixed;
+      font-family:Arial, FontAwesome;
+      top: 0.6rem;
+      height: 30px;
+      z-index: 9999999;
+      color: black;
+      background: #ffffff;
+      width: 33.7rem;;"
+    />
+  </div> -->
+
+
+<!-- <cdk-virtual-scroll-viewport itemSize="300"  class="content"> -->
+  <div class="SingleCardHeight">
+    <div class="wrapper">
+     <div class="button-row mt-2 list-group HeaderTabBtn">
+       <button mat-raised-button class="mr-2 list-group-item list-group-item-action" data-toggle="list" (click)="getAllIdea()">All Ideas<span class="count">{{allIdeaLength}}</span></button>
+       <button mat-raised-button class="mr-2 list-group-item list-group-item-action" data-toggle="list" (click)="filterIdeaOnStatus(0)">Draft<span class="count">{{this.status.status.draft}}</span></button>
+       <button mat-raised-button class="mr-2 list-group-item list-group-item-action" data-toggle="list" (click)="filterIdeaOnStatus(4)">Fresh<span class="count">{{this.status.status.publish}}</span></button>
+       <button mat-raised-button class="mr-2 list-group-item list-group-item-action" data-toggle="list" (click)="filterIdeaOnStatus(1)">Under Evaluation<span class="count">{{this.status.status.open}}</span></button>
+       <button mat-raised-button class="mr-2 list-group-item list-group-item-action" data-toggle="list" (click)="filterIdeaOnStatus(2)">Under Approval<span class="count">{{this.status.status.underApproval}}</span></button>
+       <button mat-raised-button class="mr-2 list-group-item list-group-item-action" data-toggle="list" (click)="filterIdeaOnStatus(3)">Approved<span class="count">{{this.approvedIdeaCount }}</span></button>
+       <button id="btn-click" mat-raised-button class="mr-2 list-group-item list-group-item-action" data-toggle="list" (click)="getSpmIntegratedIdea()">SPM Integration<span class="count">{{SpmIntegrationCount}}</span></button>
+       <button mat-raised-button class="mr-2 list-group-item list-group-item-action" data-toggle="list" (click)="filterIdeaOnStatus(6)">Backlog<span class="count">{{this.status.status.backlog}}</span></button>
+       <button mat-raised-button class="mr-2 list-group-item list-group-item-action active" data-toggle="list" (click)="needForApproval()">Need My Input<span class="count">{{this.status.status.approver}}</span></button>
+       <!-- <button mat-raised-button class="mr-2 list-group-item list-group-item-action active" data-toggle="list" (click)="filterIdeaOnStatus()">Details Page<span class="count">{{this.status.status.details}}</span></button> -->
+         <div class="HeadSsearch">
+           <input matInput placeholder="Search Idea By Created User"
+           [(ngModel)]="filterByUser"
+           (ngModelChange)="filterIdeaByCreatedUser()"
+           >
+         </div>
+         <div class="clear"></div>
+     </div>
+     <div
+     *ngIf="loading"
+     style="display: flex; margin: 100px auto auto auto"
+     class="spinner-border"
+     role="status"
+   >
+     <span class="sr-only">Loading...</span>
+   </div>
+   <div>
+     <div *ngIf="filter">
+       <div class="idea" *ngFor="let i of ideaList; index as index">
+         <!-- <div class="idea" *ngFor="let i of ideas | filterIdea:filterKey; index as index"> -->
+           <app-single-idea-card
+             [IsMagicTokenValid]="isMagicTokenValid"
+             [SpmEnabled]="spmEnabled"
+             [Index]="index"
+             [Idea]="i"
+             [UserEmail]="emailId"
+             [UserProfile]="profilePic"
+             [UserId]="userId"
+             [IdeaId]="Ideaid"
+             [IdeaDomain]="Ideadomain"
+             [CommentId]="CommentId"
+             [CreateCommentComment]="CreateCommentComment"
+             [editComment]="editComment"
+             [idReplyComment]="idReplyComment"
+             [idComment]="idComment"
+             [currentUser]="currentUser"
+             (onIdea)="onClick($event)"
+             (addIdeaLike)="addLike($event)"
+             (ideaDelete)="DeleteIdea($event)"
+             (connectProject)="ConnectProject($event)"
+             (addIdeaDislike)="addUnlike($event)"
+             (addIdeaComment)="Post($event)"
+             (addCommentLike)="CommentLike($event)"
+             (CommentLikeUserList)="CommentLikeUsers($event)"
+             (CommentUnlikeUserList)="CommentUnlikeUsers($event)"
+             (addCommentDislike)="CommentUnlike($event)"
+             (addCommentComment)="CommentComment($event)"
+             (ideaStatusChange)="changeIdeaStatus($event)"
+             (sendIdeaBackLog)="sendIdeatoBackLog($event)"
+             (deleteIdeaComment)="onDelete($event)"
+             (editIdeaComment)="onEdit($event)"
+             (deleteCommentReply)="ReplyDelete($event)"
+             (editCommentReply)="onEditCommentReply($event)"
+             (addIdeaFollower)="addFollower($event)"
+             (removeIdeaFollower)="removeFollower($event)"
+           ></app-single-idea-card>
+         </div>
+     </div>
+     <div *ngIf="!filter">
+       <div class="idea" *ngFor="let i of ideas; index as index">
+         <!-- <div class="idea" *ngFor="let i of ideas | filterIdea:filterKey; index as index"> -->
+           <app-single-idea-card
+             [IsMagicTokenValid]="isMagicTokenValid"
+             [SpmEnabled]="spmEnabled"
+             [Index]="index"
+             [Idea]="i"
+             [UserEmail]="emailId"
+             [UserProfile]="profilePic"
+             [UserId]="userId"
+             [IdeaId]="Ideaid"
+             [IdeaDomain]="Ideadomain"
+             [CommentId]="CommentId"
+             [CreateCommentComment]="CreateCommentComment"
+             [editComment]="editComment"
+             [idReplyComment]="idReplyComment"
+             [idComment]="idComment"
+             [currentUser]="currentUser"
+             (onIdea)="onClick($event)"
+             (addIdeaLike)="addLike($event)"
+             (ideaDelete)="DeleteIdea($event)"
+             (connectProject)="ConnectProject($event)"
+             (addIdeaDislike)="addUnlike($event)"
+             (addIdeaComment)="Post($event)"
+             (addCommentLike)="CommentLike($event)"
+             (CommentLikeUserList)="CommentLikeUsers($event)"
+             (CommentUnlikeUserList)="CommentUnlikeUsers($event)"
+             (addCommentDislike)="CommentUnlike($event)"
+             (addCommentComment)="CommentComment($event)"
+             (ideaStatusChange)="changeIdeaStatus($event)"
+             (sendIdeaBackLog)="sendIdeatoBackLog($event)"
+             (deleteIdeaComment)="onDelete($event)"
+             (editIdeaComment)="onEdit($event)"
+             (deleteCommentReply)="ReplyDelete($event)"
+             (editCommentReply)="onEditCommentReply($event)"
+             (addIdeaFollower)="addFollower($event)"
+             (removeIdeaFollower)="removeFollower($event)"
+           ></app-single-idea-card>
+         </div>
+     </div>
+   </div>
+
+     </div>
+   </div>
+     <!-- </cdk-virtual-scroll-viewport> -->

@@ -1,0 +1,59 @@
+<app-navbar></app-navbar>
+<div *ngIf="hostName != null" class="dashboard-login">
+  <!-- <div class="inner-panel"> -->
+    <div class="left" id="header">
+      <img [src]="organisationLogo" height="35px" class="org-logo" />
+      <!-- <span class="left-title">{{ hostName }}</span> -->
+
+      <div class="point-c-panel">
+        <ul>
+          <li>All Ideas Grow out of other Ideas</li>
+          <li>The More we share, The More we have</li>
+          <li>Great Minds Discuss Ideas</li>
+        </ul>
+        <!-- <div class="point-content">
+          <div class="UserImg"><img src="../../../assets/POIcon.png" alt=""></div>
+          <h2>Lorem ipsum dolor sit</h2>
+          <div class="text-p">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto laboriosam nihil
+              recusandae accusamus quis exercitationem deleniti voluptatum temporibus facere accusantium
+              ipsum fugit tenetur placeat et delectus, voluptates consequuntur, quas nesciunt?</p>
+          </div>
+        </div>
+        <div class="point-content c-rt">
+          <div class="UserImg"><img src="../../../assets/profile.JPG" alt=""></div>
+          <h2>Lorem ipsum dolor sit</h2>
+          <div class="text-p">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto laboriosam nihil
+              recusandae accusamus quis exercitationem deleniti voluptatum temporibus facere accusantium
+              ipsum fugit tenetur placeat et delectus, voluptates consequuntur, quas nesciunt?</p>
+          </div>
+        </div> -->
+        <div class="clear"></div>
+      </div>
+
+    </div>
+    <div class="right">
+      <!-- <div class="page-list">
+      <ul id="list">
+        <li routerLink="login" routerLinkActive="router-link-active">Login</li>
+        <li routerLink="user-registration" routerLinkActive="router-link-active">User registration</li>
+        <li routerLink="forgot-password" routerLinkActive="router-link-active">Forgot password</li>
+      </ul>
+    </div> -->
+      <div class="form-box">
+        <!-- <div class="google-login-panel">
+          <div class="google-login"><img src="../../../assets/google-ico.png" alt=""><span>Sign up with Google</span></div>
+          <h4>Or</h4>
+        </div> -->
+        <div class="form-section">
+          <router-outlet></router-outlet>
+         
+        </div>
+      </div>
+        <!-- <div class="login-logo"><img src="../../../assets/POIcon.png" height="30px" alt=""></div> -->
+        <div class="copyright">© 2021-2022 Idea Hub and/or its Affiliates. All Rights Reserved.</div>
+    </div>
+    <div class="clear"></div>
+  <!-- </div> -->
+</div>

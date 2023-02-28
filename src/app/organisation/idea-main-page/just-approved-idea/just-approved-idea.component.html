@@ -1,0 +1,9 @@
+<div class="card-body" *ngFor="let idea of allIdeas; index as index">
+ <app-single-just-approved-idea
+ [Index]= "index"
+ [Idea]= "idea"
+ (onIdea)="onClick($event)"
+ >
+</app-single-just-approved-idea>
+</div>
+

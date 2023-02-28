@@ -1,0 +1,33 @@
+
+<div class="comment-post-box">
+  <div class="box-panel">
+      <img [src]="profilePic">
+      <div class="text">
+          <ul>
+              <li>{{userName}}<i class="far fa-check-circle"></i></li>
+              <li class="link">{{email}}</li>
+          </ul>
+          <p><span style="font-weight: 500;color:darkgrey">Idea Statement :</span>  {{this.IdeaStatement }}</p>
+          <span style="font-weight: 500;font-size:12px;color:darkgrey">Description :</span><p align="justify" [innerHTML]="Description">  {{this.Description}}</p>
+      </div>
+  </div>
+
+  <ng-container *ngIf="CommentForm">
+  <form [formGroup]="CommentForm">
+  <div class="box-panel reply-box">
+      <img _ngcontent-mbn-c502="" [src]="img">
+      <div class="reply-text">
+          <textarea placeholder="Post your Comment" formControlName="message"></textarea>
+      </div>
+  </div>
+
+
+
+  <div class="save-reply-post">
+      <button (click)="CommentForm.valid && saveComment()">Save</button>
+  </div>
+</form>
+</ng-container>
+
+</div>
+  

@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <form [formGroup]="IntegrationForm">
+  <h4 style="font-weight: 500;">Integration Settings</h4>
+  <div class="form-group form-check form-switch row" >
+    <span class="col-1"><img src="..//..//..//assets/POIcon.png" height="35" width="35" alt=""></span>
+    <label class="form-check-label col-3">Enable SPM</label>
+    <input class="form-check-input" type="checkbox" (change)="onChange()" formControlName="isSpmEnabled">
+    <label class="form-check-label col-3">Expired on: &nbsp;&nbsp;</label> {{tokenExpDate | date: 'dd/MM/yyyy'}}
+  </div>
+  <div class="form-group form-check form-switch row" style="display: none;">
+    <span class="col-1"><img src="..//..//..//assets/cwmIcon.png" height="35" width="35" alt=""></span>
+    <label class="form-check-label col-3">Enable CWM</label>
+    <input class="form-check-input" type="checkbox" (change)="onChange()" formControlName="isCwmEnabled">
+  </div>
+  <div class="form-group form-check form-switch row" style="display: none">
+    <span class="col-1"><img src="..//..//..//assets/jiraicon.png" height="35" width="35" alt=""></span>
+    <label class="form-check-label col-3">Enable JIRA</label>
+    <input class="form-check-input" type="checkbox" (change)="onChange()" formControlName="isJiraEnabled">
+  </div>
+</form>
+<div >
+<form [formGroup]="TokenManagement">
+    <div class="form-group" *ngIf="enableSpmIntegration">
+    <h4 style="font-weight: 500;">Token Management</h4>
+      <label for="exampleFormControlFile1">New Token </label>
+      <input type="text" class="form-control" formControlName="Token" id="exampleFormControlFile1" (ngModelChange)="modelChange()"
+      [ngClass]="{
+        'is-invalid':
+        TokenManagement.get('Token').touched &&
+        TokenManagement.get('Token').invalid
+      }">
+      <div
+          *ngIf="
+          TokenManagement.get('Token').touched &&
+          TokenManagement.get('Token').invalid
+          "
+          class="invalid-feedback"
+        >
+          <div
+            style="color: rgb(238, 28, 28); font-size: 12px"
+            id="firstname"
+            *ngIf="TokenManagement.get('Token').errors?.required"
+          >
+            Token is required.
+          </div>
+        </div>
+    </div>
+  <button class="btn btn-primary btn-small"  type="submit" (click)="onSubmit()" [disabled]="show"
+  >Save</button>
+</form>
+</div>
+</div>

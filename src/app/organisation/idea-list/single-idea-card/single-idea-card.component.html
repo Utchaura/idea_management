@@ -1,0 +1,946 @@
+<div class="example-card mt-2">
+  <div class="HeadAction">
+    <!-- <div
+      class="starRating"
+      *ngIf="idea.status == 3"
+      style="display: inline-block; margin-right: 10px"
+    >
+      <ul
+        class="list-inline rating-list"
+        *ngFor="let star of stars"
+        style="display: inline-block"
+      >
+        <li [ngClass]="{ selected: star <= idea.ideaRating }">
+          <i class="fa fa-star"></i>
+        </li>
+      </ul>
+    </div> -->
+    <!-- <div class="follow-button">
+      <button
+        class="followButton"
+        type="button"
+        *ngIf="
+          follow &&
+          !isCurrentUserFollow &&
+          idea.status != 0 &&
+          idea.createdBy.id != userId
+        "
+        (click)="followIdea(idea)"
+      >
+        Follow
+      </button>
+      <button
+        class="followButton"
+        type="button"
+        *ngIf="unFollow || isCurrentUserFollow"
+        (click)="unFollowIdea(idea)"
+      >
+        Following
+      </button>
+    </div> -->
+
+    <div class="attachment" style="margin-right: 0px !important;">
+     <span *ngIf="this.idea.status == 3 && spmEnabled">
+      <span *ngIf="!idea.isPushedIntoSpm">
+        <button *ngIf="isMagicTokenValid"
+        style="background: #4aaf05 !important; cursor: pointer;"
+        class="followButton"
+        type="button"
+        (click)="CosNodeModal(Cos)"
+      >
+        Push to SPM
+      </button>
+      <!-- (click)="connectToProject(idea, index)" -->
+
+      <!-- <div class="dropdown show followButton" style="background: #4aaf05 !important; cursor: pointer; ">
+        <a class="btn btn-secondary dropdown-toggle followButton" (click)="getCosNode()" style="background: #4aaf05 !important; cursor: pointer; width: auto;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Push to SPM
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" *ngFor="let n of CosNodes">
+          <a class="dropdown-item">{{ n.CosName }}</a>
+        </div>
+      </div> -->
+
+      <button *ngIf="!isMagicTokenValid"
+      style="background: #a4d682 !important; cursor: pointer;"
+      class="followButton"
+      type="button"
+      matTooltip="Your token has been Expired. Please contact Spm Administrator."
+    >
+      Push to SPM
+    </button>
+       </span>
+     </span>
+     <span *ngIf="idea.isPushedIntoSpm" style="margin-right: 10px;">
+      <a (click)="GetProjectDesp(ProjectDespcription, idea.id)" style="cursor: pointer;">
+        <span style="cursor: pointer;">
+           <img src="..//..//..//..//assets/POIcon.png" alt="" height="24px" width="24px" matTooltip="SPM Integration">
+        </span>
+      </a>
+     </span>
+    </div>
+
+    <div *ngIf="this.idea.ideaAttachments.length != 0" class="attachment">
+      <a (click)="ExportAttachment(Attachment)"
+        ><mat-icon>ios_share</mat-icon></a
+      >
+    </div>
+
+    <div class="idea-menu">
+      <a
+        *ngIf="
+          (idea.status != 3 && emailId == idea.createdBy.emailId) ||
+          (d_ellipsis && idea.status != 3 && idea.status != 0) ||
+          (visibility && idea.status != 3)
+        "
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <!-- <mat-icon>more_vert</mat-icon> -->
+        <i class="far fa-ellipsis-v"></i>
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a
+          *ngIf="emailId == idea.createdBy.emailId && idea.status != 3"
+          (click)="ShowIdeaForm(idea, IdeaForm, index)"
+          class="dropdown-item"
+          >Edit</a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="ShowPrivacyForm(idea, PrivacyForm, index)"
+          *ngIf="
+            idea.status != 3 &&
+            idea.status != 0 &&
+            emailId == idea.createdBy.emailId
+          "
+          >Edit Privacy</a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="ShowApproverForm(idea, ApproverForm, title1, index)"
+          *ngIf="
+            (idea.status == 4 && approver) || (idea.status == 1 && approver)
+          "
+          >Pull for Approval</a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="ShowApproverForm(idea, ApproverForm, title2, index)"
+          *ngIf="approver && idea.needMyInput == true"
+          >Add more Approver</a
+        >
+
+        <a
+          *ngIf="
+            (emailId == idea.createdBy.emailId && idea.status != 3) ||
+            (visibility && idea.status != 3)
+          "
+          (click)="DeleteIdea(idea, index)"
+          class="dropdown-item"
+          >Delete
+        </a>
+
+        <a
+          class="dropdown-item"
+          (click)="ShowPrivacyForm(idea, PrivacyForm, index)"
+          *ngIf="idea.status == 0 && emailId == idea.createdBy.emailId"
+          >Publish</a
+        >
+        <a
+          class="dropdown-item"
+          (click)="ShowApproverForm(idea, ApproverForm, title1, index)"
+          *ngIf="
+            (emailId == idea.createdBy.emailId && idea.status == 4) ||
+            (idea.status == 1 && emailId == idea.createdBy.emailId)
+          "
+          >Submit for Approval</a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="rateStar(StarRatingForm, idea, index)"
+          *ngIf="approver && idea.needMyInput == true"
+          >Approve
+        </a>
+
+        <a
+          class="dropdown-item"
+          (click)="sendIdeatoBackLog(idea, 6, index)"
+          *ngIf="approver && idea.needMyInput == true"
+          >Backlog
+        </a>
+
+        <a
+          class="dropdown-item"
+          (click)="changeIdeaStatus(idea, 1, index)"
+          *ngIf="
+            (emailId == idea.createdBy.emailId && idea.status == 2) ||
+            (emailId == idea.createdBy.emailId && idea.status == 4) ||
+            (emailId == idea.createdBy.emailId && idea.status == 6) ||
+            (approver && idea.status != 0 && idea.status != 1)
+          "
+          >Under Evaluation</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="D_Section">
+    <div class="D_Left">
+      <div>
+        <span
+          ><a
+            mat-button
+            (click)="onClick(idea)"
+            class="Statement text-truncate"
+            [innerHTML]="idea.statement | safeHtml"
+          ></a
+        ></span>
+        <span class="StatementDate"
+          >Created on:&nbsp;{{ this.dateCreation }}
+        </span>
+        <span class="InfoIcon"
+          ><a (click)="InfoModal(Info)"><mat-icon>info</mat-icon></a></span
+        >
+        <div class="CategoriesStatus">
+          <span>{{ ideastatus }}</span>
+        </div>
+
+        <div class="CreatedByIdea">
+          <span style="display: inline-block;">
+            <img
+              mat-card-avatar
+              *ngIf="idea_profile_image != null"
+              [src]="idea_profile_image"
+              class="example-header-image"
+            />
+            <img
+              mat-card-avatar
+              *ngIf="idea_profile_image == null"
+              [src]="userImage"
+              class="example-header-image"
+            />
+          </span>
+          <span style="display: inline-block;vertical-align: top;">
+            <a (click)="UserProfile(idea.createdBy.id)" class="UserName">{{
+              idea.createdBy.firstName + " " + idea.createdBy.lastName
+            }}</a></span
+          >
+        </div>
+
+
+      </div>
+      <div
+        class="description"
+        *ngIf="idea.description"
+        [innerHTML]="idea.description"
+      ></div>
+
+    </div>
+    <div class="D_Right">
+
+      <div class="ClickHover" *ngIf="idea.benefits != null">
+        <span>Benefits</span>
+        <div class="ShowDescription">{{ idea.benefits }}</div>
+      </div>
+      <div class="ClickHover" style="padding-left: 15px;" *ngIf="idea.challenges != null">
+        <span>Challenges</span>
+        <div class="ShowDescription MgBig">{{ idea.challenges }}</div>
+      </div>
+
+      <!-- <mat-accordion *ngIf="idea.benefits != null">
+        <mat-expansion-panel hideToggle> </mat-expansion-panel>
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title> Benefits </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>{{ idea.benefits }}</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-accordion *ngIf="idea.challenges != null">
+        <mat-expansion-panel hideToggle> </mat-expansion-panel>
+        <mat-expansion-panel
+          (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title> Challenges </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>{{ idea.challenges }}</p>
+        </mat-expansion-panel>
+      </mat-accordion> -->
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="bd-highlight">
+    <div Class="ActionPanel">
+      <span *ngIf="idea.videoUrl != null" class="IdeaLink">
+        <a (click)="OpenVideoModal(VideoUrl)">{{ idea.videoUrl }}</a>
+      </span>
+      <span class="LikeModalBtn">
+        <span>
+          <a (click)="LikeModal(Up)">
+            <!-- <mat-icon>thumb_up</mat-icon> -->
+            <i class="far fa-thumbs-up"></i>
+            <span class="count">{{ idea.ideaLikes.length }}</span>
+          </a>
+        </span>
+        <span>
+          <a (click)="UnlikeModal(Unlike)">
+            <!-- <mat-icon>thumb_down</mat-icon> -->
+            <i class="far fa-thumbs-down"></i>
+            <span class="count">{{ idea.ideaUnLikes.length }}</span>
+          </a>
+        </span>
+        <span>
+          <a (click)="CommentModal(Comment)">
+            <!-- <mat-icon>mode_comment</mat-icon> -->
+            <i class="far fa-comment-alt icons"></i>
+            <span class="count">{{ idea.totalComment }}</span>
+          </a>
+        </span>
+      </span>
+      <span class="Budget">
+        <span *ngIf="idea.budget != null">
+          <a
+            >Budget&nbsp;&nbsp;:
+            <span style="color: rgb(32, 202, 32)">{{ idea.budget }}</span></a
+          >
+        </span>
+        <span *ngIf="idea.efforts != null">
+          <a
+            >Efforts&nbsp;&nbsp;:
+            <span style="color: rgb(57, 138, 208)">{{
+              idea.efforts
+            }}</span></a
+          >
+        </span>
+      </span>
+    </div>
+    <!-- <span>
+      <img
+        mat-card-avatar
+        *ngIf="idea_profile_image != null"
+        [src]="idea_profile_image"
+        class="example-header-image"
+      />
+      <img
+        mat-card-avatar
+        *ngIf="idea_profile_image == null"
+        [src]="userImage"
+        class="example-header-image"
+      />
+    </span>
+    <span>
+      <a (click)="UserProfile(idea.createdBy.id)" class="UserName">{{
+        idea.createdBy.firstName + " " + idea.createdBy.lastName
+      }}</a></span
+    > -->
+    <div class="ModalOption">
+      <span *ngIf="idea.categories.length != 0" class="Mg-lt">
+        <span> Categories</span>
+
+        <a (click)="CategoryModal(Category)"
+          >{{ idea.categories[0]
+          }}<span *ngIf="idea.categories.length > 1"><img src="../../../../assets/right-arrow-white.png"
+            /></span></a>
+      </span>
+
+      <span *ngIf="idea.skills.length != 0" class="Mg-lt">
+        <span>Skills</span>
+        <!--background-color: #367fc2-->
+        <a style="border: 1px solid #367fc2;" (click)="SkillsModal(Skill)"
+          >{{ idea.skills[0]
+          }}<span *ngIf="idea.skills.length > 1" ><img src="../../../../assets/right-arrow-white.png"
+            /></span></a>
+      </span>
+
+      <span *ngIf="idea.ideaTeams.length != 0" class="Mg-lt">
+        <span>Teams</span>
+        <!--background-color: #df7615-->
+        <a style="border: 1px solid #df7615;" (click)="TeamModal(Team)"
+          >{{ idea.ideaTeams[0].team.description
+          }}<span *ngIf="idea.ideaTeams.length > 1"><img src="../../../../assets/right-arrow-white.png"
+            /></span></a>
+      </span>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <ng-template #Unlike let-modal>
+    <div class="ViewModal">
+      <div class="PopupTitle">Downvoted User List</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="scroll">
+        <div class="modal-body">
+          <div class="box-panel">
+            <div *ngFor="let user of idea.ideaUnLikes" style="margin-top: 15px">
+              <div mat-card-avatar style="float: left">
+                <img
+                  [src]="user.user.userImageUrl"
+                  alt=""
+                  style="border-radius: 50%; width: 40px; height: 40px"
+                />
+              </div>
+              <div class="R_LikePopup">
+                <span class="mb-0">{{
+                  user.user.firstName + " " + user.user.lastName
+                }}</span>
+                <p>{{ user.user.emailId }}</p>
+                <div class="LikeIcon"><i class="far fa-thumbs-down"></i></div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #Up let-modal>
+    <div class="ViewModal">
+      <div class="PopupTitle">Upvoted User List</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="scroll">
+        <div class="modal-body">
+          <div class="box-panel">
+            <div *ngFor="let user of idea.ideaLikes" style="margin-top: 15px">
+              <div mat-card-avatar style="float: left">
+                <img
+                  [src]="user.user.userImageUrl"
+                  alt=""
+                  style="border-radius: 50%; width: 40px; height: 40px"
+                />
+              </div>
+              <div class="R_LikePopup">
+                <span class="mb-0">{{
+                  user.user.firstName + " " + user.user.lastName
+                }}</span>
+                <p>{{ user.user.emailId }}</p>
+                <div class="LikeIcon IconActive">
+                  <i class="far fa-thumbs-up"></i>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #CommentUp let-modal>
+    <div class="likeModal">
+      <div class="modal-header">
+        <h4 class="modal-title">Liked Users List</h4>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="scroll">
+        <div class="modal-body">
+          <div class="box-panel">
+            <mat-card-content
+              id="likes"
+              *ngFor="let like of idea.comments.commentLikes"
+            >
+              <div *ngIf="like.user.userImageUrl != null">
+                <img
+                  mat-card-avatar
+                  [src]="like.user.userImageUrl"
+                  class="example-like-image"
+                />
+              </div>
+              <div *ngIf="like.user.userImageUrl == null">
+                <img
+                  mat-card-avatar
+                  src="./../../assets/admin.png"
+                  class="example-like-image"
+                />
+              </div>
+              <div id="likeusername">
+                {{ like.user.firstName + "  " + like.user.lastName }}
+              </div>
+              <div id="likeuseremail">{{ like.user.emailId }}</div>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #Comment let-modal>
+    <div class="commentModal">
+      <div class="PopupTitle">Comments</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="scroll">
+        <div class="modal-body">
+          <div class="box-panel">
+            <mat-card-content *ngFor="let comment of idea.comments">
+              <div
+                style="display: inline-block; margin-bottom: 10px; width: 100%"
+              >
+                <div mat-card-avatar style="float: left">
+                  <img
+                    [src]="comment.user.userImageUrl"
+                    alt=""
+                    style="border-radius: 50%; width: 40px; height: 40px"
+                  />
+                </div>
+                <div class="R_LikePopup">
+                  <span>{{
+                    comment.user.firstName + " " + comment.user.lastName
+                  }}</span>
+                  <div class="description">{{ comment.message }}</div>
+
+                  <div class="LikeModalBtn">
+                    <a (click)="CommentLikeModal(CommentUp)">
+                      <i class="far fa-thumbs-up"></i>
+                      <span class="count">{{
+                        comment.commentLikes.length
+                      }}</span>
+                    </a>
+                    <a (click)="CommentUnlikeModal(CommentUnlike)">
+                      <i class="far fa-thumbs-down"></i>
+                      <span class="count">{{
+                        comment.commentUnlikes.length
+                      }}</span>
+                    </a>
+                    <a>
+                      <i class="far fa-comment-alt icons"></i>
+                      <span class="count">{{
+                        comment.commentComments.length
+                      }}</span>
+                    </a>
+                    <!-- <span style="font-size: 12px;color: #ffc107;">Reply</span> -->
+                  </div>
+
+                  <div *ngFor="let comment of comment.commentComments">
+                    <div style="margin-top: 10px">
+                      <div mat-card-avatar style="float: left">
+                        <img
+                          [src]="comment.user.userImageUrl"
+                          alt=""
+                          style="border-radius: 50%; width: 35px; height: 35px"
+                        />
+                      </div>
+                      <div
+                        class="R_LikePopup"
+                        style="
+                          width: calc(100% - 40px);
+                          padding: 0px 5px;
+                          background-color: #f1eeee;
+                          color: #000000;
+                        "
+                      >
+                        <h5 class="mb-0">
+                          {{
+                            comment.user.firstName + " " + comment.user.lastName
+                          }}
+                        </h5>
+                        <div class="description mb-0">
+                          {{ comment.message }}
+                        </div>
+                      </div>
+                      <div class="clear"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clear"></div>
+              </div>
+
+              <ng-template #CommentUp let-modal>
+                <div class="ViewModal">
+                  <div class="PopupTitle">Comment Up</div>
+                  <span
+                    class="PopupClose"
+                    (click)="modal.dismiss('Cross click')"
+                    ><img src="./../../assets/close-tab.png"
+                  /></span>
+                  <div class="scroll">
+                    <div class="modal-body">
+                      <div class="box-panel">
+                        <div
+                          *ngFor="let user of comment.commentLikes"
+                          style="margin-top: 15px"
+                        >
+                          <div mat-card-avatar style="float: left">
+                            <img
+                              [src]="user.user.userImageUrl"
+                              alt=""
+                              style="
+                                border-radius: 50%;
+                                width: 40px;
+                                height: 40px;
+                              "
+                            />
+                          </div>
+                          <div class="R_LikePopup">
+                            <span>{{
+                              user.user.firstName + " " + user.user.lastName
+                            }}</span>
+                            <p>{{ user.user.emailId }}</p>
+                            <div class="LikeIcon IconActive">
+                              <i class="far fa-thumbs-up"></i>
+                            </div>
+                          </div>
+                          <div class="clear"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+
+              <ng-template #CommentUnlike let-modal>
+                <div class="ViewModal">
+                  <div class="PopupTitle">Comment Unlike</div>
+                  <span
+                    class="PopupClose"
+                    (click)="modal.dismiss('Cross click')"
+                    ><img src="./../../assets/close-tab.png"
+                  /></span>
+                  <div class="scroll">
+                    <div class="modal-body">
+                      <div class="box-panel">
+                        <div
+                          *ngFor="let user of comment.commentUnlikes"
+                          style="margin-top: 15px"
+                        >
+                          <div mat-card-avatar style="float: left">
+                            <img
+                              [src]="user.user.userImageUrl"
+                              alt=""
+                              style="
+                                border-radius: 50%;
+                                width: 40px;
+                                height: 40px;
+                              "
+                            />
+                          </div>
+                          <div class="R_LikePopup">
+                            <span>{{
+                              user.user.firstName + " " + user.user.lastName
+                            }}</span>
+                            <p>{{ user.user.emailId }}</p>
+                            <div class="LikeIcon">
+                              <i class="far fa-thumbs-down"></i>
+                            </div>
+                          </div>
+                          <div class="clear"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #VideoUrl let-modal>
+    <div class="likeModal">
+      <div class="PopupTitle">Video</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="modal-body">
+        <div class="box-panel">
+          <mat-card-content>
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe
+                class="embed-responsive-item"
+                [src]="finalVideoUrl"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #Cos let-modal>
+    <div class="likeModal">
+      <div class="PopupTitle">Select Cos Node</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="modal-body">
+        <div class="box-panel">
+          <select name="Push to SPM" id="" class="form-control followButton" style="color: black !important;
+          background-color: #efefef !important;
+          border: 1px solid lightgray;" (change)="changeCosNode($event)">
+            <option>--Select Cos Nodes--</option>
+            <option [value]="node.CosId" *ngFor="let node of CosNodes">{{node.CosName}}</option>
+          </select>
+          <br>
+          <button class="followButton" (click)="connectToProject(idea, index)">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #Info let-modal>
+    <div class="likeModal">
+      <!-- <div class="PopupTitle">Idea Statement</div> -->
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="modal-body" style="margin-top: 30px;">
+        <div class="box-panel">
+          <span *ngIf="idea.ideaCoverImg != null">
+            <img
+              mat-card-image
+              [src]="idea.ideaCoverImg.imageSrc"
+              alt="Idea image"
+              class="FixedImage"
+            />
+          </span>
+          <div class="DescriptionBox">
+            <div
+              class="PopupSubhead"
+              [innerHTML]="idea.statement | safeHtml"
+            ></div>
+            <div *ngIf="less" class="DesCollapse">
+              <div class="description">
+                <p *ngIf="idea.description" [innerHTML]="idea.description"></p>
+              </div>
+              <span *ngIf="less" class="DesBtn" (click)="seemore()"
+                >See More</span
+              >
+            </div>
+            <div *ngIf="more" class="DesExpand">
+              <div style="height: 120px; overflow-x: auto; margin-bottom: 5px">
+                <p *ngIf="idea.description" [innerHTML]="idea.description"></p>
+              </div>
+              <span *ngIf="more" class="DesBtn" (click)="seeless()"
+                >See Less</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #Attachment let-modal>
+    <div class="likeModal">
+      <div class="PopupTitle">Attachments</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="modal-body">
+        <div class="box-panel">
+          <div>
+            <div *ngFor="let attachment of idea.ideaAttachments">
+              <div class="attachment-files">
+                {{ attachment.attachment.attachmentName }}
+              </div>
+              <div class="attachment-icon">
+                <a href="{{ attachment.attachment.attachmentSrc }}">
+                  <img
+                    src="./../../assets/download.png"
+                    style="width: 14px; height: 14px"
+                  />
+                </a>
+              </div>
+            </div>
+            <div *ngIf="idea.ideaAttachments.length == 0">
+              There is no Attachment to Export.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #ProjectDespcription let-modal>
+    <div class="likeModal">
+      <div class="PopupTitle">Project description</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="modal-body">
+        <div class="box-panel" style="font-size: 12px;font-family: 'sf-pro-text-regular';">
+          <div class="container" style="padding: 0;">
+            <div class="row">
+              <div class="col-4">
+                Project Code
+              </div>
+              <div class="col-8">:-
+                {{ SpmProject.ProjectCode }}
+              </div>
+              <div class="col-4">
+                Project Name
+              </div>
+              <div class="col-8">:-
+                {{ SpmProject.ProjectName }}
+              </div>
+              <div class="col-4">
+                Step Despcription
+              </div>
+              <div class="col-8">:-
+                {{ SpmProject.StepDescription }}
+              </div>
+              <div class="col-4">
+                Start Date
+              </div>
+              <div class="col-8">:-
+                {{ StartDate }}
+              </div>
+              <div class="col-4">
+                Finish Date
+              </div>
+              <div class="col-8">:-
+                {{ FinishDate }}
+              </div>
+            </div>
+            <div class="spmLinkbtn">
+              <a (click)="goToSpm()" style="cursor: pointer; color: #367fc2; text-decoration: underline;">Go To SPM</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #Team let-modal>
+    <div class="unlikeModal">
+      <div class="PopupTitle">Teams</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="scroll">
+        <div class="modal-body">
+          <div class="box-panel">
+            <div class="CategoriesBtn" *ngFor="let team of idea.ideaTeams">
+              <span>{{ team.team.description }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #Skill let-modal>
+    <div class="unlikeModal">
+      <div class="PopupTitle">Skills</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="scroll">
+        <div class="modal-body">
+          <div class="box-panel">
+            <div class="CategoriesBtn" *ngFor="let skill of idea.skills">
+              <span>{{ skill }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #Category let-modal>
+    <div class="unlikeModal">
+      <div class="PopupTitle">Categories</div>
+      <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+      <div class="scroll">
+        <div class="modal-body">
+          <div class="box-panel">
+            <div class="CategoriesBtn" *ngFor="let cat of idea.categories">
+              <span>{{ cat }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<ng-template #IdeaForm let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Idea</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-idea-form
+      [idea_id]="Ideaid"
+      [idea_domain]="Ideadomain"
+      [index]="index"
+    ></app-idea-form>
+  </div>
+</ng-template>
+
+<ng-template #PrivacyForm let-modal>
+  <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+  <div class="modal-body" style="margin-top: 20px">
+    <app-privacy-form [idea_id]="Ideaid" [index]="index"></app-privacy-form>
+  </div>
+</ng-template>
+
+<ng-template #ApproverForm let-modal>
+  <span class="PopupClose" (click)="modal.dismiss('Cross click')"><img src="./../../assets/close-tab.png" /></span>
+  <div class="modal-body" style="margin-top: 20px;">
+    <app-approver-form
+      [idea_id]="Ideaid"
+      [idea_status]="Ideastatus"
+      [index]="index"
+    ></app-approver-form>
+  </div>
+</ng-template>
+<ng-template #StarRatingForm let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Rate This Idea</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-star-rating-form [Idea]="idea" [index]="index"></app-star-rating-form>
+  </div>
+</ng-template>

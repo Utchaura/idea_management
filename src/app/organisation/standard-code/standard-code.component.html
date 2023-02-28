@@ -1,0 +1,27 @@
+
+  
+  <div class="wrapper">
+    <div class="left border-right">
+      <div class="menu-parent">
+        <ul class="topNavigation">
+          <li class="list-items" routerLink="departmentGrid"
+          routerLinkActive="router-link" >
+              <span class="text"> Team </span>
+          </li>
+          <li class="list-items" routerLink="categoryGrid"
+          routerLinkActive="router-link" >
+              <span class="text"> Category </span>
+          </li>
+          <!-- <li class="list-items" routerLink="tagGrid"
+          routerLinkActive="router-link" >
+              <span class="text"> Tag </span>
+          </li> -->
+    
+          </ul>
+        </div>
+    </div>
+    <div class="right">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="clear"></div>
+  </div>

@@ -1,0 +1,812 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <img
+      mat-card-avatar
+      *ngIf="idea_profile_image != null"
+      [src]="idea_profile_image"
+      class="example-header-image"
+    />
+    <img
+      mat-card-avatar
+      *ngIf="idea_profile_image == null"
+      [src]="userImage"
+      class="example-header-image"
+    />
+    <mat-card-title
+      >{{ idea.createdBy.firstName + " " + idea.createdBy.lastName }}
+
+      <button class="followButton" type="button" mat-button *ngIf="follow  && !isCurrentUserFollow && idea.status != 0 && idea.createdBy.id != userId" (click)="followIdea(idea)">Follow</button>
+      <button class="followButton" type="button" mat-button *ngIf="unFollow || isCurrentUserFollow" (click)="unFollowIdea(idea)">Following</button>
+
+      <div class="starRating" *ngIf= "idea.status ==3">
+
+          <ul class="list-inline rating-list"
+              *ngFor="let star of stars" style="display: inline-block" >
+                <li
+                    [ngClass]="{'selected': (star <= idea.ideaRating)}">
+                  <i class="fa fa-star"></i>
+                </li>
+          </ul>
+
+       </div>
+
+      <button
+        *ngIf="idea.status != 3 && emailId == idea.createdBy.emailId ||d_ellipsis && idea.status != 3 && idea.status !=0 || visibility && idea.status!=3  "
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i class="far fa-ellipsis-v"></i>
+      </button>
+      <div
+        class="dropdown-menu"
+        aria-labelledby="dropdownMenuButton"
+        style="
+          position: absolute;
+          transform: translate3d(482px, 14px, 0px);
+          top: 0px;
+          left: 0px;
+          will-change: transform;
+        "
+      >
+        <a
+          *ngIf="emailId == idea.createdBy.emailId && idea.status != 3"
+          (click)="ShowIdeaForm(idea, IdeaForm, index)"
+          class="dropdown-item"
+          >Edit</a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="ShowPrivacyForm(idea, PrivacyForm)"
+          *ngIf="idea.status !=3 && idea.status != 0 && emailId == idea.createdBy.emailId"
+          >Edit Privacy</a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="ShowApproverForm(idea, ApproverForm,title1)"
+          *ngIf="idea.status == 4 && approver|| idea.status == 1 && approver"
+          >Pull for Approval</a
+           >
+
+        <a
+          class="dropdown-item"
+          (click)="ShowApproverForm(idea, ApproverForm,title2)"
+          *ngIf="approver && idea.needMyInput == true"
+          >Add more Approver</a
+        >
+
+        <a
+          *ngIf="emailId == idea.createdBy.emailId && idea.status!=3 || visibility && idea.status!=3 "
+          (click)="DeleteIdea(idea,index)"
+          class="dropdown-item"
+          >Delete </a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="ShowPrivacyForm(idea, PrivacyForm)"
+          *ngIf="idea.status == 0 && emailId == idea.createdBy.emailId "
+          >Publish</a
+        >
+        <a
+          class="dropdown-item"
+          (click)="ShowApproverForm(idea, ApproverForm,title1)"
+          *ngIf="emailId == idea.createdBy.emailId && idea.status == 4||idea.status==1 &&emailId == idea.createdBy.emailId"
+          >Submit for Approval</a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="rateStar(StarRatingForm,idea)"
+          *ngIf="approver && idea.needMyInput == true"
+
+          >Approve </a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="sendIdeatoBackLog(idea, 6)"
+          *ngIf="approver && idea.needMyInput == true"
+
+          >Backlog </a
+        >
+
+        <a
+          class="dropdown-item"
+          (click)="changeIdeaStatus(idea, 1)"
+          *ngIf="emailId == idea.createdBy.emailId && idea.status == 2 || emailId == idea.createdBy.emailId && idea.status==4 || emailId == idea.createdBy.emailId && idea.status==6 ||approver && idea.status!=0 && idea.status != 1"
+          >Under Evaluation</a
+        >
+        <!-- click="IdeaInfo(idea)" -->
+      </div>
+    </mat-card-title>
+
+    <mat-card-subtitle
+      [innerHTML]="idea.statement | safeHtml"
+      (click)="onClick(idea)"
+    ></mat-card-subtitle>
+  </mat-card-header>
+  <div *ngIf="idea.description || idea.ideaCoverImg || idea.videoUrl">
+    <div id="innercontent" *ngIf="idea.description">
+      <img
+        *ngIf="!idea.videoUrl && idea.ideaCoverImg"
+        mat-card-image
+        [src]="ideaCoverImage"
+        (click)="onClick(idea)"
+        style="cursor: pointer"
+      />
+      <!-- <img
+        *ngIf="!idea.videoUrl && !idea.ideaCoverImg"
+        mat-card-image
+        src="./../../../../../assets/defIdea.png"
+        (click)="onClick(idea)"
+        style="cursor: pointer"
+      /> -->
+      <iframe
+        *ngIf="idea.videoUrl"
+        mat-card-image
+        [src]="finalVideoUrl"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <!-- <mat-card-content> -->
+      <div
+        *ngIf="idea.description"
+        id="descriptionContent"
+        align="justify"
+        [innerHTML]="idea.description"
+        (click)="onClick(idea)"
+      ></div>
+
+      <!-- </mat-card-content> -->
+    </div>
+    <div id="innercontent" *ngIf="!idea.description">
+      <img
+        *ngIf="!idea.videoUrl && idea.ideaCoverImg"
+        mat-card-image
+        [src]="ideaCoverImage"
+        (click)="onClick(idea)"
+        style="cursor: pointer"
+      />
+
+      <!-- <img
+        *ngIf="!idea.videoUrl && !idea.ideaCoverImg"
+        mat-card-image
+        src="..//..//..//..//assets/defIdea.png"
+        (click)="onClick(idea)"
+        style="cursor: pointer;"
+      /> -->
+      <iframe
+        *ngIf="idea.videoUrl"
+        mat-card-image
+        [src]="finalVideoUrl"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <!-- <mat-card-content> -->
+
+      <div
+        *ngIf="idea.description"
+        id="descriptionContent"
+        align="justify"
+        [innerHTML]="idea.description"
+        (click)="onClick(idea)"
+      ></div>
+      <!-- </mat-card-content> -->
+    </div>
+  </div>
+  <mat-card-actions>
+    <button
+      *ngIf="!idea.isCurrentUserLiked"
+      class="btn-card btn-sm mr-2"
+      (click)="addLike(idea, index)"
+    >
+      <i class="far fa-thumbs-up"></i>&nbsp;Up&nbsp;<span
+        *ngIf="idea.ideaLikes != 0"
+        >{{ idea.ideaLikes.length }}</span
+      >
+      <!-- <mat-icon>thumb_up_off_alt</mat-icon>&nbsp;
+      <span *ngIf="idea.totalLike != 0">{{ idea.totalLike }}</span> -->
+    </button>
+    <button
+      *ngIf="idea.isCurrentUserLiked"
+      class="btn-card curr-user btn-sm mr-2"
+      (click)="addLike(idea, index)"
+    >
+      <i class="far fa-thumbs-up"></i>&nbsp;Up&nbsp;<span
+        *ngIf="idea.ideaLikes != 0"
+        >{{ idea.ideaLikes.length }}</span
+      >
+      <!-- <mat-icon>thumb_up_off_alt</mat-icon>&nbsp;
+      <span *ngIf="idea.totalLike != 0" style="font-size: 20px">{{
+        idea.totalLike
+      }}</span> -->
+    </button>
+    <button
+      *ngIf="!idea.isCurrentUserDisliked && dislikeVisibility"
+      class="btn-card btn-sm mr-2"
+      (click)="addUnlike(idea, index)"
+    >
+      <i class="far fa-thumbs-down"></i>&nbsp;Down&nbsp;<span
+        *ngIf="idea.ideaUnLikes != 0"
+        >{{ idea.ideaUnLikes.length }}</span
+      >
+      <!-- <mat-icon>thumb_down_off_alt</mat-icon>&nbsp;
+      <span *ngIf="idea.totalUnlike != 0">{{ idea.totalUnlike }}</span> -->
+    </button>
+    <button
+      *ngIf="idea.isCurrentUserDisliked"
+      class="btn-card curr-user btn-sm mr-2"
+      (click)="addUnlike(idea, index)"
+    >
+      <i class="far fa-thumbs-down"></i>&nbsp;Down&nbsp;<span
+        *ngIf="idea.ideaUnLikes != 0"
+        >{{ idea.ideaUnLikes.length }}</span
+      >
+      <!-- <mat-icon>thumb_down_off_alt</mat-icon>&nbsp;
+      <span *ngIf="idea.totalUnlike != 0">{{ idea.totalUnlike }}</span> -->
+    </button>
+    <!-- <button class="btn-card btn-sm mr-2" (click)="CommentForm(idea)"><i class="far fa-comment-alt icons"></i>&nbsp;Comment&nbsp;<span *ngIf='((idea.totalComment) != 0)'>{{idea.totalComment}}</span></button> -->
+    <button class="btn-card btn-sm mr-2">
+      <i class="far fa-comment-alt icons"></i>&nbsp;Comment&nbsp;
+      <!-- <mat-icon>add_comment</mat-icon>&nbsp; -->
+      <span *ngIf="idea.totalComment != 0">{{ idea.totalComment }}</span>
+    </button>
+
+    <div class="count-view">
+      <div
+        class="count-up"
+        (click)="LikeModal(Up)"
+        *ngIf="idea.ideaLikes.length != 0"
+      >
+        Up
+      </div>
+      &nbsp;&nbsp;
+      <div
+        class="count-down"
+        (click)="UnlikeModal(Unlike)"
+        *ngIf="idea.ideaUnLikes.length != 0"
+      >
+        Down
+      </div>
+      <!-- <div class="count-up" >Up</div>&nbsp;&nbsp;
+    <div class="count-down">Down</div> -->
+    </div>
+  </mat-card-actions>
+
+  <ng-template #Unlike let-modal>
+    <div class="unlikeModal">
+      <div class="modal-header">
+        <h4 class="modal-title">Disliked Users List</h4>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="scroll">
+        <div class="modal-body">
+          <div class="box-panel">
+            <mat-card-content id="unlikes" *ngFor="let unlike of idea.ideaUnLikes">
+              <div *ngIf="unlike.user.userImageUrl != null">
+                <img
+                  mat-card-avatar
+                  [src]="unlike.user.userImageUrl"
+                  class="example-like-image"
+                />
+              </div>
+              <div *ngIf="unlike.user.userImageUrl == null">
+                <img
+                  mat-card-avatar
+                  src="./../../assets/admin.png"
+                  class="example-like-image"
+                />
+              </div>
+              <div id="unlikeusername">{{ unlike.user.firstName + " " + unlike.user.lastName }}</div>
+              <div id="unlikeuseremail">{{ unlike.user.emailId }}</div>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <hr style="margin-bottom: 7px" />
+
+  <ng-template #Up let-modal>
+    <div class="likeModal">
+      <div class="modal-header">
+        <h4 class="modal-title">Liked Users List</h4>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="scroll">
+        <div class="modal-body">
+          <div class="box-panel">
+            <mat-card-content id="likes" *ngFor="let like of idea.ideaLikes">
+              <div *ngIf="like.user.userImageUrl != null">
+                <img
+                  mat-card-avatar
+                  [src]="like.user.userImageUrl"
+                  class="example-like-image"
+                />
+              </div>
+              <div *ngIf="like.user.userImageUrl == null">
+                <img
+                  mat-card-avatar
+                  src="./../../assets/admin.png"
+                  class="example-like-image"
+                />
+              </div>
+              <div id="likeusername">{{ like.user.firstName + "  "+ like.user.lastName }}</div>
+              <div id="likeuseremail">{{ like.user.emailId }}</div>
+            </mat-card-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- comment -->
+
+  <div>
+    <div class="ls-area" *ngIf="profilePic">
+      <img mat-card-avatar [src]="profilePic" class="example-user-image" />
+    </div>
+    <div class="ls-area" *ngIf="!profilePic">
+      <img
+        mat-card-avatar
+        src="./../../assets/admin.png"
+        class="example-user-image"
+      />
+    </div>
+    <div class="rs-area">
+      <textarea
+        id="messagepost"
+        placeholder="Post your Comment"
+        [(ngModel)]="PostMessage"
+        (keydown.enter)="Post(idea, index)"
+      ></textarea>
+    </div>
+    <div class="clear"></div>
+    <!-- add by nandlal 9-6-2021 -->
+  </div>
+
+  <!-- end of comment -->
+
+  <mat-card-content *ngFor="let comment of idea.comments">
+    <div>
+      <div class="ls-area" *ngIf="comment.user.userImageUrl != null">
+        <img
+          mat-card-avatar
+          [src]="comment.user.userImageUrl"
+          class="example-comment-image"
+        />
+      </div>
+      <div *ngIf="comment.user.userImageUrl == null" class="ls-area">
+        <img
+          mat-card-avatar
+          src="./../../../../../assets/admin.png"
+          class="example-comment-image"
+        />
+      </div>
+      <div class="rs-area" id="commentbox">
+        <div class="username">
+          {{ comment.user.firstName + " " + comment.user.lastName }}
+        </div>
+        <!-- Edit and delete visibility -->
+        <button
+          *ngIf="comment.user.id == userId||visibility && idea.status!=3 "
+          type="button"
+          id="dropdownButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i class="far fa-ellipsis-v"></i>
+        </button>
+        <div
+          class="dropdown-menu"
+          aria-labelledby="dropdownMenuButton"
+          style="
+            position: absolute;
+            will-change: transform;
+            border-radius: 0px;
+            border: none;
+            min-width: auto;
+            box-shadow: rgb(0 0 0 / 15%) 0px 4px 8px 0px, rgb(0 0 0 / 17%) 0px 6px 20px 0px;
+            top: 0px;
+            transform: translate3d(502px, 235px, 0px);
+          "
+        >
+        <div *ngIf="comment.user.id == userId">
+          <a class="dropdown-item" (click)="ShowCommentForm(comment)">Edit</a>
+        </div>
+          <div *ngIf="comment.user.id == userId ||visibility && idea.status!=3 ">
+            <a class="dropdown-item" (click)="onDelete(comment, index)">Delete</a>
+          </div>
+
+        </div>
+        <!-- End of Edit and delete visibility -->
+
+        <div class="comment-text">{{ comment.message }}</div>
+        <div *ngIf="editComment && idComment == comment.id">
+          <div class="row">
+            <div class="col-1" *ngIf="comment.user.userImageUrl !=null">
+              <img
+                [src]="comment.user.userImageUrl"
+                class="example-editcomment-image"
+              />
+            </div>
+            <div class="col-1" *ngIf="comment.user.userImageUrl == null">
+              <img
+                src="./../../assets/admin.png"
+                class="example-editcomment-image"
+              />
+            </div>
+            <div class="col-11">
+              <textarea
+                id="editpost"
+                placeholder="Edit your Comment"
+                [(ngModel)]="CommentMessage"
+                (keydown.enter)="onEdit(comment, index)"
+              >
+              </textarea>
+            </div>
+          </div>
+        </div>
+
+        <mat-card-actions id="commentbuttons">
+          <button
+            *ngIf="!comment.isCurrentCommentLiked"
+            class="btn-ccard btn-sm mr-2"
+            (click)="CommentLike(comment, index)"
+          >
+            <i class="far fa-thumbs-up"></i>&nbsp;Up
+            <span *ngIf="comment.commentLikes.length != 0">{{
+              comment.commentLikes.length
+            }}</span>
+          </button>
+          <button
+            *ngIf="comment.isCurrentCommentLiked"
+            class="btn-ccard curr-user btn-sm mr-2"
+            (click)="CommentLike(comment, index)"
+          >
+            <i class="far fa-thumbs-up"></i>&nbsp;Up
+            <span *ngIf="comment.commentLikes.length != 0">{{
+              comment.commentLikes.length
+            }}</span>
+          </button>
+
+          <button
+            *ngIf="!comment.isCurrentCommentDisliked && dislikeVisibility"
+            class="btn-ccard btn-sm mr-2"
+            (click)="CommentUnlike(comment, index)"
+          >
+            <i class="far fa-thumbs-down"></i>&nbsp;Down
+            <span *ngIf="comment.commentUnlikes.length != 0">{{
+              comment.commentUnlikes.length
+            }}</span>
+          </button>
+          <button
+            *ngIf="comment.isCurrentCommentDisliked"
+            class="btn-ccard curr-user btn-sm mr-2"
+            (click)="CommentUnlike(comment, index)"
+          >
+            <i class="far fa-thumbs-down"></i>&nbsp;Down
+            <span *ngIf="comment.commentUnlikes.length != 0">{{
+              comment.commentUnlikes.length
+            }}</span>
+          </button>
+
+          <button
+            class="btn-ccard btn-sm mr-2"
+            (click)="CreateComment(comment)"
+          >
+            <i class="far fa-comment-alt icons"></i>&nbsp;Comment
+            <span *ngIf="comment.commentComments.length != 0">{{
+              comment.commentComments.length
+            }}</span>
+          </button>
+
+          <div class="count-view">
+            <div
+              *ngIf="comment.commentLikes.length != 0"
+              class="count-up"
+              (click)="ShowCommentLikeUser(comment, CommentLikeUser)"
+            >
+              Up
+            </div>
+            &nbsp;&nbsp;
+            <div
+              *ngIf="comment.commentUnlikes.length != 0"
+              class="count-down"
+              (click)="ShowCommentUnlikeUser(comment, CommentUnlikeUser)"
+            >
+              Down
+            </div>
+          </div>
+        </mat-card-actions>
+
+        <div
+          class="row"
+          *ngIf="CreateCommentComment && CommentId == comment.id"
+        >
+          <div class="col-1" *ngIf="profilePic">
+            <img
+              mat-card-avatar
+              [src]="profilePic"
+              class="example-reply-image"
+            />
+          </div>
+          <div class="col-1" *ngIf="!profilePic">
+            <img
+              mat-card-avatar
+              src="./../../assets/admin.png"
+              class="example-reply-image"
+            />
+          </div>
+          <div class="col-11">
+            <textarea
+              id="commentreplypost"
+              placeholder="Reply to this Comment"
+              [(ngModel)]="CommentMessage"
+              (keydown.enter)="CommentComment(comment, index)"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- replies on comments -->
+        <mat-card-content
+          *ngFor="let reply of comment.commentComments; index as ind"
+        >
+          <div class="row">
+            <div class="col-1" *ngIf="reply.user.userImageUrl != null">
+              <img
+                [src]="reply.user.userImageUrl"
+                class="example-commentreply-image"
+              />
+            </div>
+            <div class="col-1" *ngIf="reply.user.userImageUrl == null">
+              <img
+                src="./../../assets/admin.png"
+                class="example-commentreply-image"
+              />
+            </div>
+            <div class="col-11" id="commentreplybox">
+              <div style="color: #555555;
+              font-family: 'SF Pro Text Bold';
+              font-size: 11px;
+              line-height: 14px;">
+                {{ reply.user.firstName + " " + reply.user.lastName }}
+              </div>
+
+              <button
+                *ngIf="reply.user.id == userId"
+                type="button"
+                id="dropdownButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="far fa-ellipsis-v"></i>
+              </button>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+                style="
+                  position: absolute;
+                  transform: translate3d(130px, 14px, 0px);
+                  top: 0px;
+                  left: 0px;
+                  will-change: transform;
+                "
+              >
+                <a
+                  class="dropdown-item"
+                  (click)="ShowReplyCommentForm(reply, comment.id)"
+                  >Edit</a
+                >
+                <a
+                  class="dropdown-item"
+                  (click)="ReplyDelete(reply, comment.id, idea, index)"
+                  >Delete</a
+                >
+              </div>
+
+              <div>{{ reply.message }}</div>
+
+              <div *ngIf="editCommentReply && idReplyComment == reply.id">
+                <div class="row">
+                  <div class="col-1" *ngIf="reply.user.userImageUrl != null">
+                    <img
+                      [src]="reply.user.userImageUrl"
+                      class="example-editcomment-image"
+                    />
+                  </div>
+                  <div class="col-1" *ngIf="!reply.user.userImageUrl == null">
+                    <img
+                      src="./../../assets/admin.png"
+                      class="example-editcomment-image"
+                    />
+                  </div>
+                  <div class="col-11">
+                    <textarea
+                      id="editreplypost"
+                      placeholder="Edit your Comment"
+                      [(ngModel)]="CommentReplyEditMessage"
+                      (keydown.enter)="
+                        onEditCommentReply(reply, comment.id, idea.id, index)
+                      "
+                    >
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+        <!-- end of replies on comments -->
+
+        <ng-template #CommentUnlikeUser let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title">Users Who Disliked this Comment</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- <app-commentdisliked [comment_id]="CommentId"></app-commentdisliked> -->
+            <div class="scroll">
+              <mat-card-content
+                id="commentunlikes"
+                *ngFor="let commentunlike of comment.commentUnlikes"
+              >
+                <div *ngIf="commentunlike.user.userImageUrl != null">
+                  <img
+                    mat-card-avatar
+                    [src]="commentunlike.user.userImageUrl"
+                    class="example-header-image"
+                  />
+                </div>
+                <div *ngIf="commentunlike.user.userImageUrl == null">
+                  <img
+                    mat-card-avatar
+                    src="./../../assets/admin.png"
+                    class="example-header-image"
+                  />
+                </div>
+                <div id="commentusername">
+                  {{ commentunlike.user.firstName + " " + commentunlike.user.lastName }}
+                </div>
+                <div id="commentuseremail">
+                  {{ commentunlike.user.emailId }}
+                </div>
+              </mat-card-content>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template #CommentLikeUser let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title">Users Who Liked This Comment</h4>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- <app-commentliked [comment_id]="CommentId"></app-commentliked> -->
+            <div class="scroll">
+              <mat-card-content
+                id="commentlikes"
+                *ngFor="let commentlike of comment.commentLikes"
+              >
+                <div *ngIf="commentlike.user.userImageUrl !=null">
+                  <img
+                    mat-card-avatar
+                    [src]="commentlike.user.userImageUrl"
+                    class="example-header-image"
+                  />
+                </div>
+                <div *ngIf="commentlike.user.userImageUrl==null">
+                  <img
+                    mat-card-avatar
+                    src="./../../assets/admin.png"
+                    class="example-header-image"
+                  />
+                </div>
+                <div id="commentusername">{{ commentlike.user.firstName + " " + commentlike.user.lastName }}</div>
+                <div id="commentuseremail">{{ commentlike.user.emailId }}</div>
+              </mat-card-content>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      <div class="clear"></div>
+      <!-- add by nandlal 9-6-2021 -->
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #IdeaForm let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Idea</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-idea-form
+      [idea_id]="Ideaid"
+      [idea_domain]="Ideadomain"
+      [index]="index"
+    ></app-idea-form>
+  </div>
+</ng-template>
+
+<ng-template #PrivacyForm let-modal>
+  <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+        ><img src="./../../assets/close-tab.png"
+      /></span>
+  <div class="modal-body" style="margin-top: 20px">
+    <app-privacy-form [idea_id]="Ideaid"></app-privacy-form>
+  </div>
+</ng-template>
+
+<ng-template #ApproverForm let-modal>
+  <span class="PopupClose" (click)="modal.dismiss('Cross click')"><img src="./../../assets/close-tab.png" /></span>
+  <div class="modal-body" style="margin-top: 20px;">
+    <app-approver-form
+      [idea_id]="Ideaid"
+      [idea_status]="Ideastatus"
+    ></app-approver-form>
+  </div>
+</ng-template>
+<ng-template #StarRatingForm let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Rate This Idea</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-star-rating-form [Idea]="idea" ></app-star-rating-form>
+  </div>
+</ng-template>

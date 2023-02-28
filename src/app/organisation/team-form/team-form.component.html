@@ -1,0 +1,124 @@
+<div class="container">
+  <form
+    [formGroup]="teamCreateForm"
+    id="form"
+    (ngSubmit)="teamCreateForm.valid && onSubmit()"
+  >
+    <div class="form-box">
+      <div>
+        <div>
+          <div>
+            <label class="new-label fl_lt" for="code" id="code"
+              >Code
+              <span
+                style="color: rgb(238, 28, 28); font-weight: 800"
+                class="form-required"
+                >*</span
+              >
+            </label>
+          </div>
+          <div>
+            <input
+              type="text"
+              class="form-control input-lg"
+              id="code"
+              name="code"
+              formControlName="code"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div>
+            <label class="new-label fl_lt" for="description" id="description"
+              >Description
+              <span
+                style="color: rgb(238, 28, 28); font-weight: 800"
+                class="form-required"
+                >*</span
+              >
+            </label>
+          </div>
+          <div>
+            <input
+              type="text"
+              class="form-control input-lg"
+              id="description"
+              name="description"
+              formControlName="description"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="form-group">
+          <div>
+            <div>
+              <label for="teamtags" id="teamtags">Users</label>
+            </div>
+            <div>
+              <mat-form-field class="example-chip-list">
+                <mat-chip-list #chipList aria-label="Team selection">
+                  <mat-chip
+                    *ngFor="let team of teams"
+                    [selectable]="selectable"
+                    (removed)="removeTeam(team)"
+                  >
+                 {{ team.name }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    #teamInput
+                    [formControl]="teamCtrl"
+                    [matAutocomplete]="autoTeam"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="addTeam($event)"
+                  />
+                </mat-chip-list>
+                <mat-autocomplete
+                  #autoTeam="matAutocomplete"
+                  (optionSelected)="selectedTeam($event)"
+                >
+                <ng-container *ngFor="let team of filteredTeams | async">
+                  <mat-option
+                   class="optionDropdown"
+                  *ngIf="!teams.includes(team)"
+                  [value]="team"
+                  >
+                    {{ team.name }}
+                  </mat-option>
+                </ng-container>
+                </mat-autocomplete>
+              </mat-form-field>
+              <!--
+<pre>{{teams|json}}</pre> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="addnew">
+    <a class="btn2"  (click)="onSubmit()" >Create new Team</a>
+   </div> -->
+
+    <div class="btn-right">
+      <button
+        *ngIf="!team_id"
+        class="btn btn-primary mr-2"
+        [disabled]="!teamCreateForm.valid"
+      >
+        Submit
+      </button>
+      <button
+        *ngIf="team_id"
+        class="btn btn-primary mr-2 "
+        [disabled]="!teamCreateForm.valid"
+      >
+        Update
+      </button>
+    </div>
+  </form>
+</div>

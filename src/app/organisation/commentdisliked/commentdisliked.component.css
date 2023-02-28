@@ -1,0 +1,56 @@
+ 
+  .example-header-image {
+    background-size: cover;
+    height: 40px;/*change by Nandlal 10-6-2021 */
+    width: 40px;
+    border-radius: 50%;
+    margin-left: 5px;
+  }
+
+  #username{
+    padding:0px 60px;
+    color:Black;
+    margin-top: -36px;
+  }
+  
+   #useremail{
+  padding:0px 60px;
+  color:darkgrey;
+  }
+
+  #commentunlikes{
+    border-top: 1px solid lightgray;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 10px;
+    margin-bottom: -7px;
+    color: darkgrey;
+    height: 69px;
+}
+
+.scroll {
+  max-height: 20rem;
+  min-height: 5rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+
+.scroll::-webkit-scrollbar {
+width: 4px;
+}
+
+/* Track */
+.scroll::-webkit-scrollbar-track {
+background: #f1f1f1; 
+}
+
+/* Handle */
+.scroll::-webkit-scrollbar-thumb {
+background: #888; 
+}
+
+/* Handle on hover */
+.scroll::-webkit-scrollbar-thumb:hover {
+background: #555; 
+}

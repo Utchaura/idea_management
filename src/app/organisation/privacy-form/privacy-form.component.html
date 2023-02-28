@@ -1,0 +1,127 @@
+<div>
+  <div>
+    <div class="row">
+      <div class="col-1" *ngIf="profilePic">
+        <img [src]="profilePic" class="img-profile" />
+      </div>
+      <div class="col-1" *ngIf="!profilePic">
+        <img  src="./../../assets/admin.png"  class="img-profile" />
+      </div>
+      <div class="col-10" style="margin-left: 22px">
+        <div
+          style="width: 104%; height: 64px"
+          id="testMultiple"
+          placeholder="Idea statement.."
+        >
+          <span style="color: black; font-size: 14px; font-weight: 500">
+            {{ userName }}
+          </span>
+          <div class="dropdown show" style="margin-top: 1px">
+            <span style="color: grey; font-size: 14px; font-weight: 500">
+              {{ userEmail }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-left: 18px">
+        <form [formGroup]="PrivacyForm">
+          <div class="form-group" class="example-radio-group">
+            <label>
+            <div class="align">
+              <input
+                id="public"
+                class="example-radio-button"
+                type="radio"
+                value="Public"
+                name="privacy"
+                [(ngModel)]="privacyVal"
+                formControlName="privacy"
+                (click)="onItemChange($event)"
+              />
+              <img id="icons" src="./../../assets/publicIcon.jpg" /><span
+                id="privacysettings"
+                >Public</span
+              >
+            </div>
+          </label>
+          <label>
+            <div class="align" *ngIf= "defaultDisplay">
+              <input
+                id="users"
+                class="example-radio-button"
+                type="radio"
+                value="SelectedUsers"
+                name="privacy"
+                formControlName="privacy"
+                [(ngModel)]="privacyVal"
+                (click)="onItemChange($event); selectUsers(userSelectForm)"
+              />
+              <img id="icons" src="./../../assets/usersIcon.png" /><span
+                id="privacysettings"
+                >Selective Users</span
+              >
+            </div>
+          </label>
+          <label>
+            <div class="align" *ngIf= "defaultDisplay">
+              <input
+                id="usersExcept"
+                class="example-radio-button"
+                type="radio"
+                value="ExceptUsers"
+                name="privacy"
+                formControlName="privacy"
+                [(ngModel)]="privacyVal"
+                (click)="
+                  onItemChange($event); selectUsers(userSelectForm)
+                "
+              />
+              <img id="icons" src="./../../assets/usersExcept.png" />
+              <span id="privacysettings">Users Except</span>
+            </div>
+          </label>
+            <!-- <app-privacy-select-form></app-privacy-select-form> -->
+            <!-- start -->
+            <!-- <div class="form-group">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="privacyValue" id="privacyValue" value="Public" checked>
+                <label class="form-check-lebel" for="privacyValue">Public</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="privacyValue" id="privacyValue" value="SelectedUsers">
+                <label class="form-check-lebel" for="privacyValue">Select Users</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="privacyValue" id="privacyValue" value="ExceptUsers">
+                <label class="form-check-lebel" for="privacyValue">Except Users</label>
+              </div>
+            </div> -->
+            <!-- end -->
+            </div>
+
+        </form>
+      </div>
+      <br />
+    </div>
+
+    <div class="save-idea">
+      <div class="save-idea-btn">
+        <button class="btn" (click)="Save()">
+          <span>Save</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #userSelectForm let-modal>
+  <span class="PopupClose" (click)="modal.dismiss('Cross click')"
+  ><img src="./../../assets/close-tab.png"
+/></span>
+  <div class="modal-body" style="margin-top: 20px;">
+    <app-user-select-form [privacy_value]="privacyvalue" [idea_id]="Ideaid" [status]="status"></app-user-select-form>
+  </div>
+</ng-template>

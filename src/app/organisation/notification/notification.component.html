@@ -1,0 +1,31 @@
+<!-- <div class="row">
+    <div class="col col-6 notify-title">
+        <h4 class="modal-title">Notifications</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class=" col col-6">
+        New
+    </div>
+</div> -->
+<div class="cls-clear" style="margin-right: 10px;text-align: right;color: blue;">
+    <a class="clear" (click)="clearNotification()" >Clear All</a>
+  </div>
+<div >
+  <div class="card-body" *ngFor="let i of notificationList; let Index = index">
+      <div  style="display: flex">
+          <div style=" float: right;width: 90%" (click)="IdeaProfile(i)">
+              <div style="font-size: 12px; font-weight: 400;" [innerHTML]="i.messageText | safeHtml">
+              </div>
+              <div style="font-size: 10px;">
+                  <!-- {{i.created_on}} -->
+                  {{calculateDiff(i)}} {{hourTime(i)}}
+              </div>
+          </div>
+          <div (click)= "deleteNotification(i, Index )" style="width: 10%; color:black" ><i style="margin: 0 0 0 25px;" class="fas fa-times"></i>
+        </div>
+        </div>
+      </div>
+
+  </div>

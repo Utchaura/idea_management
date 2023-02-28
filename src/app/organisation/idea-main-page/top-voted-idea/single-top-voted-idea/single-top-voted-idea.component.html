@@ -1,0 +1,25 @@
+<div style="display: flex" class="mb-2">
+    <div style="width: 80%">
+      <div
+        style="font-size: 14px; font-weight: 500;"
+        class="text-truncate"  [innerHTML]="idea.statement | safeHtml"
+        (click)="onClick(idea)"
+      >
+      </div>
+      <div
+        style="font-size: 12px;"
+        class="text-truncate"
+        [innerHTML]="idea.description"
+        
+      ></div>
+    </div>
+    <div style="width: 19%; cursor: pointer" class="text-right">
+      <img *ngIf="idea.ideaCoverImg"
+        [src]="idea.ideaCoverImg.imageSrc"
+        (click)="onClick(idea)"
+        height="40px"
+          width="40px"
+        style="border-radius: 5px; background-size: cover; margin: 4px 0;"
+      />
+    </div>
+  </div>
